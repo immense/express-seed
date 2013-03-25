@@ -12,14 +12,14 @@ io = require('socket.io').listen server, {log: false}
 
 app.configure ->
   app.set 'port', process.env.PORT or 3000
-  app.set 'views', __dirname + '/views'
+  app.set 'views', "#{__dirname}/views"
   app.set 'view engine', 'jade'
-  app.use express.favicon()
+  app.use express.favicon "#{__dirname}/assets/img/favicon.ico"
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use app.router
   app.use require('connect-assets')()
-  app.use express.static __dirname + '/assets'
+  app.use express.static "#{__dirname}/assets"
 
 app.configure 'development', ->
   app.use express.errorHandler dumpExceptions: true, showStack: true
