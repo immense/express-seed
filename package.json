@@ -6,6 +6,8 @@
     "express": "*",
     "jade": "*",
     "coffee-script": "*",
-    "less": "*"
+    "less": "*",
+    "connect-assets": "*",
+    "socket.io": "*"
   }
 }
