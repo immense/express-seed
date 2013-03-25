@@ -4,11 +4,11 @@ html
     meta(charset='utf8')
     base(href='/')
     title Express Socket.io Seed App
-    link(rel='stylesheet', href='/css/app.css')
+    != css('app')
   body
     block content
 
     script(src='/socket.io/socket.io.js')
-    script(src='/js/app.js')
+    != js('app')
 
     block script

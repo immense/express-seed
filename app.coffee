@@ -6,17 +6,20 @@ app = module.exports = express()
 server = require('http').createServer app
 
 # Hook Socket.io into Express
-io = require('socket.io').listen server
+io = require('socket.io').listen server, {log: false}
 
 # Configuration
 
 app.configure ->
+  app.set 'port', process.env.PORT or 3000
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+  app.use express.favicon()
   app.use express.bodyParser()
   app.use express.methodOverride()
-  app.use express.static(__dirname + '/public')
   app.use app.router
+  app.use require('connect-assets')()
+  app.use express.static __dirname + '/assets'
 
 app.configure 'development', ->
   app.use express.errorHandler dumpExceptions: true, showStack: true
@@ -27,12 +30,8 @@ app.configure 'production', ->
 # Routes
 
 app.get '/', routes.index
-#app.get '/partials/:name', routes.partials
 
-# redirect all others to the index (HTML5 history)
-app.get '*', routes.index
-
-# Socket.io Communication
+# Socket.io Routes
 
 io.sockets.on 'connection', socket
 

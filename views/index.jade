@@ -1,4 +1,10 @@
 extends layout
 
 block content
-  p foo
+  h1
+    i.icon-beer
+    |Yay beer!
+
+block script
+  :coffeescript
+    $ -> console.log 'foo bar baz'
