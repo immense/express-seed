@@ -1,20 +1,25 @@
 extends layout
 
 block content
-  h1
-    img(src='/img/seed.png')
-    |Immense Express Seed
-  p This seed contains the following:
-  ul
-    li Express
-    li Flatstrap
-    li Fontawesome
-    li jQuery
-    li Less
-    li CoffeeScript
-    li Jade
-    li Socket.io
-    li connect-assets
+  .container
+    .hero-unit
+      img.pull-left(src='/img/seed.png')
+      h1 Immense Express Seed
+    .row
+      .span8.offset2
+        h2 This seed contains the following:
+        ul
+          li: a(href='http://expressjs.com/') Express
+          li: a(href='http://littlesparkvt.com/flatstrap/') Flatstrap
+          li: a(href='http://fortawesome.github.com/Font-Awesome/') Font Awesome
+          li: a(href='http://jquery.com/') jQuery
+          li: a(href='http://lesscss.org/') Less
+          li: a(href='http://coffeescript.org/') CoffeeScript
+          li: a(href='http://jade-lang.com/') Jade
+          li: a(href='http://socket.io/') Socket.IO
+          li: a(href='https://github.com/adunkman/connect-assets') connect-assets
+    hr
+    footer © Immense Networks 2013
 
 block script
   :coffeescript
