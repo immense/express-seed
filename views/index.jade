@@ -17,10 +17,19 @@ block content
           li: a(href='http://coffeescript.org/') CoffeeScript
           li: a(href='http://jade-lang.com/') Jade
           li: a(href='http://socket.io/') Socket.IO
+          li: a(href='http://modernizr.com/') Modernizr
+          li: a(href='https://github.com/kriskowal/es5-shim') es5-shim
           li: a(href='https://github.com/adunkman/connect-assets') connect-assets
     hr
     footer © Immense Networks 2013
 
 block script
   :coffeescript
-    $ -> console.log 'foo bar baz'
+    $ ->
+      console.log 'connecting to socket.io on the server...'
+      socket = io.connect()
+
+      socket.on 'connect', ->
+        console.log 'connected!  now let\'s disconnect...'
+
+        socket.disconnect()
