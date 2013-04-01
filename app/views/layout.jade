@@ -3,12 +3,12 @@ html
   head
     meta(charset='utf8')
     title Express Socket.io Seed App
-    script(type='text/javascript', src='/vendor/js/modernizr.js')
-    != css('app')
+    script(type='text/javascript', src='/js/modernizr.js')
+    != assets.tag('/css/app.css')
   body
     block content
 
     script(src='/socket.io/socket.io.js')
-    != js('app')
+    != assets.tag('/js/app.js')
 
     block script
