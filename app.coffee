@@ -4,7 +4,7 @@ app = module.exports = express()
 server = require('http').createServer app
 
 # Hook Socket.io into Express
-io = require('socket.io').listen server, {log: false}
+io = require('socket.io').listen server, {'log level': 2}
 
 # Load Configuration
 require('./app/config/express')(app)

@@ -16,6 +16,7 @@ assets = [
     url: '/css/app.css'
     filename: "#{__dirname}/../../assets/css/app.less"
     compress: process.env.NODE_ENV is 'production'
+    paths: ["#{__dirname}/../../assets/css", "#{__dirname}/../../vendor/css"]
   }),
   # main app.coffee snockets file
   new rack.SnocketsAsset({
