@@ -9,6 +9,7 @@
     "less": "*",
     "socket.io": "*",
     "asset-rack": "*",
-    "connect": "*"
+    "connect": "*",
+    "fs-watch-tree": "*"
   }
 }
