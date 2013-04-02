@@ -17,5 +17,5 @@ io.sockets.on 'connection', require './app/controllers/socket'
 
 # Start server
 
-server.listen 3000, ->
-  console.log "Express server listening on port #{this.address().port} in #{app.settings.env} mode"
+server.listen app.settings.port, ->
+  console.log "Express server listening on port #{app.settings.port} in #{app.settings.env} mode"

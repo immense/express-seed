@@ -1,5 +1,5 @@
 {
-  "name": "isc-toolreq",
+  "name": "express-seed",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -9,6 +9,6 @@
     "less": "*",
     "socket.io": "*",
     "asset-rack": "*",
-    "connect": "~2.7.4"
+    "connect": "*"
   }
 }
