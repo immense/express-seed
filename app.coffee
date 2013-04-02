@@ -1,21 +1,24 @@
+start = new Date
+
 express = require 'express'
 
+# create and configure the express app
 app = module.exports = express()
-server = require('http').createServer app
+require('./app/config/express')(app)
+env = app.settings.env
 
-# Hook Socket.io into Express
+# create the http and socket.io server
+server = require('http').createServer app
 io = require('socket.io').listen server, {'log level': 2}
 
-# Load Configuration
-require('./app/config/express')(app)
-
-# Load Controllers
+# setup controllers
 require('./app/controllers/index')(app)
 
-# Socket.io Routes
-io.sockets.on 'connection', require './app/controllers/socket'
+# setup socket.io controller
+# each socket controller is its own instance per socket that connects
+io.sockets.on 'connection', (socket) ->
+  require('./app/controllers/socket')(socket)
 
-# Start server
-
+# start server
 server.listen app.settings.port, ->
-  console.log "Express server listening on port #{app.settings.port} in #{app.settings.env} mode"
+  console.log "Express server started on port #{app.settings.port} (#{env} mode) in #{new Date - start}ms"
