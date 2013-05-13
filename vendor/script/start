@@ -1,0 +1,12 @@
+#! /bin/bash
+
+# For use with forever, e.g: (from top directory in project)
+# > forever start -c sh vendor/script/start
+
+# Remove the socket before starting up the app
+export PORT=/tmp/seed.socket
+export NODE_ENV=production
+
+# Start up the app
+rm /tmp/seed.socket
+coffee app.coffee
