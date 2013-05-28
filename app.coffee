@@ -3,7 +3,7 @@ start = new Date
 express = require 'express'
 
 # create and configure the express app
-app = module.exports = express()
+module.exports = app = express()
 require('./app/config/express')(app)
 env = app.settings.env
 

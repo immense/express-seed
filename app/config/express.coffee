@@ -1,17 +1,22 @@
 express = require 'express'
 connect = require 'connect'
 
+conf = require './app'
+assets = require './assets'
+
+cwd = process.cwd()
+
 module.exports = (app) ->
 
-  assets = require './assets.coffee'
-
   app.configure ->
-    app.set 'port', process.env.PORT or 3000
-    app.set 'views', "#{__dirname}/../views"
+    app.set 'env', conf.env
+    app.set 'port', conf.port
+    app.set 'views', "#{cwd}/app/views"
     app.set 'view engine', 'jade'
-    app.use express.logger()
+
+    app.use express.logger('short')
     app.use connect.compress()
-    app.use express.favicon "#{__dirname}/../../assets/img/favicon.ico"
+    app.use express.favicon "#{cwd}/assets/img/favicon.ico"
     app.use express.bodyParser()
     app.use express.methodOverride()
     app.use assets
