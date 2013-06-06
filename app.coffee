@@ -1,4 +1,8 @@
+require './app/lib/process'
 require './app/lib/pid'
+config = require './app/config/app'
+
+if config.socket? then require './app/lib/socket'
 
 start = new Date
 
@@ -24,4 +28,4 @@ io.sockets.on 'connection', (socket) ->
 # start server
 server.listen app.settings.port, ->
   time = new Date - start
-  console.log "Express server started on port #{app.settings.port} (#{env} mode) in #{time}ms"
+  console.log "Express server started on port/socket #{app.settings.port} (#{env} mode) in #{time}ms"

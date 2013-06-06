@@ -10,7 +10,7 @@ module.exports = (app) ->
 
   app.configure ->
     app.set 'env', conf.env
-    app.set 'port', conf.port
+    app.set 'port', if conf.socket? then conf.socket else conf.port
     app.set 'views', "#{cwd}/app/views"
     app.set 'view engine', 'jade'
 
