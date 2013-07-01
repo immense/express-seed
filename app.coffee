@@ -1,3 +1,6 @@
+util = require 'util'
+fs = require 'fs'
+
 require './app/lib/process'
 require './app/lib/pid'
 config = require './app/config/app'
@@ -25,7 +28,13 @@ require('./app/controllers/index')(app)
 io.sockets.on 'connection', (socket) ->
   require('./app/controllers/socket')(socket)
 
+# delete the socket file if it exists (from a previous crash)
+if config.socket? and fs.existsSync config.socket
+  fs.unlinkSync config.socket
+
 # start server
 server.listen app.settings.port, ->
+  if config.socket? and fs.existsSync config.socket
+    fs.chmodSync config.socket, '777'
   time = new Date - start
-  console.log "Express server started on port/socket #{app.settings.port} (#{env} mode) in #{time}ms"
+  util.log "Express server started on port/socket #{app.settings.port} (#{env} mode) in #{time}ms"
