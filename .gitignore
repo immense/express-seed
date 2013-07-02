@@ -3,4 +3,5 @@ builtAssets
 .DS_Store
 .cake_task_cache
 *.un~
+*.log
 app/config/app.coffee
