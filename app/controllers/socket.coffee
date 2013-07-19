@@ -1,5 +1,8 @@
+log4js = require '../lib/logger'
+socketLogger = log4js.getLogger 'socket'
+
 module.exports = (socket) ->
-  console.log 'socket connected'
+  socketLogger.info 'hello socket!'
 
   socket.on 'disconnect', ->
-    console.log 'socket disconnected'
+    socketLogger.info 'goodbye socket!'

@@ -16,6 +16,7 @@
     "asset-rack": "*",
     "connect": "*",
     "ff": "*",
-    "gaze": "*"
+    "gaze": "*",
+    "log4js": "*"
   }
 }
