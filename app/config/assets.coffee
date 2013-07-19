@@ -42,7 +42,7 @@ assets = buildAssets()
 if conf.env is 'development'
   gaze = require 'gaze'
 
-  gaze ["#{cwd}/vendor/**/{*.js,*.css,*.less}", "#{cwd}/assets/**/{*.coffee,*.less}"], (err) ->
+  gaze ["#{cwd}/vendor/**/*", "#{cwd}/assets/**/*"], (err) ->
     @on 'all', (event, filepath) ->
       console.log "#{filepath} was #{event}, rebuilding assets."
       assets = buildAssets()
