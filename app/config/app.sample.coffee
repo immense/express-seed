@@ -11,5 +11,6 @@ module.exports =
   # available levels: (each module only outputs certain levels as marked)
   # TRACE, DEBUG, INFO, WARN, ERROR, FATAL
   logLevel:
-    socket:   'DEBUG' # DEBUG and INFO
-    server:   'DEBUG' # INFO, WARN, and ERROR
+    socket:  'DEBUG' # DEBUG and INFO
+    server:  'DEBUG' # INFO, WARN, and ERROR
+    process: 'DEBUG' # INFO and FATAL

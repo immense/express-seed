@@ -2,7 +2,6 @@ express = require 'express'
 connect = require 'connect'
 
 conf = require './app'
-assets = require './assets'
 
 log4js = require '../lib/logger'
 logger = log4js.getLogger 'server'
@@ -18,11 +17,11 @@ module.exports = (app) ->
     app.set 'view engine', 'jade'
 
     app.use log4js.connectLogger logger, level: 'auto', format: ':method :url :status - :response-time ms'
+    app.use express.static "#{cwd}/public"
     app.use connect.compress()
     app.use express.favicon "#{cwd}/assets/img/favicon.ico"
     app.use express.bodyParser()
     app.use express.methodOverride()
-    app.use assets
     app.use app.router
 
   app.configure 'development', ->

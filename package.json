@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch app --watch app.coffee ./app.coffee",
+    "dev": "nodemon --watch app --watch node_modules --watch app.coffee ./app.coffee",
     "start": "forever start -c coffee app.coffee"
   },
   "dependencies": {
@@ -18,5 +18,16 @@
     "ff": "*",
     "gaze": "*",
     "log4js": "*"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-watch": "*"
   }
 }

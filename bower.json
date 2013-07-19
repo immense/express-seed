@@ -1,0 +1,11 @@
+{
+  "name": "express-seed",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "es5-shim": "latest",
+    "jquery": "latest",
+    "flatstrap": "latest",
+    "modernizr": "latest"
+  }
+}
