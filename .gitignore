@@ -6,3 +6,4 @@ builtAssets
 *.log
 app/config/app.coffee
 npm-debug.log
+public/*

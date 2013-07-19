@@ -68,6 +68,9 @@ module.exports = (grunt) ->
     #     dest: 'public/js/app.js'
 
     watch:
+      options:
+        livereload: true
+
       scripts:
         files: ['app/assets/scripts/**/*.coffee']
         tasks: ['coffee', 'concat', 'clean:post']
@@ -79,6 +82,12 @@ module.exports = (grunt) ->
       images:
         files: ['app/assets/img/**']
         tasks: ['clean:pre_images', 'copy:images']
+
+      templates:
+        files: ['app/views/**']
+
+      gruntfile:
+        files: ['Gruntfile.coffee']
   }
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
