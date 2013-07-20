@@ -88,6 +88,18 @@ module.exports = (grunt) ->
 
       gruntfile:
         files: ['Gruntfile.coffee']
+
+    nodemon:
+      dev:
+        options:
+          file: 'app.coffee'
+          watchedFolders: ['app.coffee', 'app', 'node_modules']
+
+    concurrent:
+      dev:
+        tasks: ['nodemon:dev', 'watch']
+        options:
+          logConcurrentOutput: true
   }
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -97,6 +109,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-nodemon'
+  grunt.loadNpmTasks 'grunt-concurrent'
 
   grunt.registerTask('default', [
     'clean:pre',
@@ -106,5 +120,16 @@ module.exports = (grunt) ->
     'concat',
     # 'uglify',
     'clean:post',
-    'watch'
+    'concurrent:dev'
   ])
+
+  # grunt.registerTask('production', [
+  #   'clean:pre',
+  #   'copy',
+  #   'less',
+  #   'coffee',
+  #   'concat',
+  #   # 'uglify',
+  #   'clean:post',
+  #   'forever'
+  # ])

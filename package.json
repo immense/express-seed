@@ -3,18 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch app --watch node_modules --watch app.coffee ./app.coffee",
-    "start": "forever start -c coffee app.coffee"
+    "dev": "grunt",
+    "start": "grunt production"
   },
   "dependencies": {
     "express": "*",
     "jade": "*",
-    "coffee-script": "*",
-    "less": "*",
     "socket.io": "*",
-    "connect-assets": "*",
-    "asset-rack": "*",
-    "connect": "*",
     "ff": "*",
     "gaze": "*",
     "log4js": "*"
@@ -28,6 +23,8 @@
     "grunt-contrib-less": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-copy": "*",
-    "grunt-contrib-watch": "*"
+    "grunt-contrib-watch": "*",
+    "grunt-nodemon": "*",
+    "grunt-concurrent": "*"
   }
 }

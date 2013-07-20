@@ -1,5 +1,4 @@
 express = require 'express'
-connect = require 'connect'
 
 conf = require './app'
 
@@ -18,8 +17,8 @@ module.exports = (app) ->
 
     app.use log4js.connectLogger logger, level: 'auto', format: ':method :url :status - :response-time ms'
     app.use express.static "#{cwd}/public"
-    app.use connect.compress()
-    app.use express.favicon "#{cwd}/assets/img/favicon.ico"
+    app.use express.compress()
+    app.use express.favicon "#{cwd}/app/assets/img/favicon.ico"
     app.use express.bodyParser()
     app.use express.methodOverride()
     app.use app.router
