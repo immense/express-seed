@@ -1,3 +1,5 @@
+config = require './app/config/app'
+
 module.exports = (grunt) ->
   grunt.initConfig {
 
@@ -35,7 +37,7 @@ module.exports = (grunt) ->
       app:
         options:
           paths: ['components/flatstrap/assets/less']
-          compress: true
+          compress: config.env is 'production'
         files:
           'public/css/app.css': 'app/assets/styles/app.less'
 
@@ -59,13 +61,13 @@ module.exports = (grunt) ->
         dest: 'public/js/app.js'
 
     # uglifyjs files
-    # uglify:
-    #   app_top:
-    #     src: 'tmp/app_top.js'
-    #     dest: 'public/js/app_top.js'
-    #   app:
-    #     src: 'tmp/app.js'
-    #     dest: 'public/js/app.js'
+    uglify:
+      app_top:
+        src: 'public/js/app_top.js'
+        dest: 'public/js/app_top.js'
+      app:
+        src: 'public/js/app.js'
+        dest: 'public/js/app.js'
 
     watch:
       options:
@@ -95,6 +97,12 @@ module.exports = (grunt) ->
           file: 'app.coffee'
           watchedFolders: ['app.coffee', 'app', 'node_modules']
 
+    forever:
+      options:
+        index: 'app.coffee'
+        logDir: 'log'
+        command: './node_modules/.bin/coffee'
+
     concurrent:
       dev:
         tasks: ['nodemon:dev', 'watch']
@@ -111,25 +119,32 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-nodemon'
   grunt.loadNpmTasks 'grunt-concurrent'
+  grunt.loadNpmTasks 'grunt-forever'
 
-  grunt.registerTask('default', [
-    'clean:pre',
-    'copy',
-    'less',
-    'coffee',
-    'concat',
-    # 'uglify',
-    'clean:post',
-    'concurrent:dev'
-  ])
+  if config.env is 'development'
 
-  # grunt.registerTask('production', [
-  #   'clean:pre',
-  #   'copy',
-  #   'less',
-  #   'coffee',
-  #   'concat',
-  #   # 'uglify',
-  #   'clean:post',
-  #   'forever'
-  # ])
+    grunt.registerTask('default', [
+      'clean:pre',
+      'copy',
+      'less',
+      'coffee',
+      'concat',
+      'clean:post',
+      'concurrent:dev'
+    ])
+
+  else if config.env is 'production'
+
+    grunt.registerTask('default', [
+      'clean:pre',
+      'copy',
+      'less',
+      'coffee',
+      'concat',
+      'uglify',
+      'clean:post',
+      'forever:start'
+    ])
+
+    grunt.registerTask('stop', ['forever:stop'])
+    grunt.registerTask('restart', ['forever:restart'])
