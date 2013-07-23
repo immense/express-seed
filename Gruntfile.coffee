@@ -1,4 +1,5 @@
 config = require './app/config/app'
+assets_config = require './app/assets/config'
 
 module.exports = (grunt) ->
   grunt.initConfig {
@@ -39,26 +40,29 @@ module.exports = (grunt) ->
           paths: ['components/flatstrap/assets/less']
           compress: config.env is 'production'
         files:
-          'public/css/app.css': 'app/assets/styles/app.less'
+          'tmp/less_output/app.css': 'app/assets/styles/app.less'
 
     # concatenate js files
     concat:
       options:
         separator: ';'
-      app_top:
+      app_top_js:
         src: [
           'components/modernizr/modernizr.js'
         ]
         dest: 'public/js/app_top.js'
-      app:
-        src: [
-          'components/es5-shim/es5-shim.js',
-          'components/jquery/jquery.js',
-          'components/flatstrap/assets/js/bootstrap.js',
-          'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js',
+      app_js:
+        src: assets_config.app_js.concat [
           'tmp/coffee_output/*'
         ]
         dest: 'public/js/app.js'
+      app_css:
+        options:
+          separator: '\n'
+        src: assets_config.app_css.concat [
+          'tmp/less_output/app.css'
+        ]
+        dest: 'public/css/app.css'
 
     # uglifyjs files
     uglify:
@@ -75,11 +79,11 @@ module.exports = (grunt) ->
 
       scripts:
         files: ['app/assets/scripts/**/*.coffee']
-        tasks: ['coffee', 'concat', 'clean:post']
+        tasks: ['coffee', 'concat:app_top_js', 'concat:app_js', 'clean:post']
 
       styles:
         files: ['app/assets/styles/**/*.less']
-        tasks: ['less']
+        tasks: ['less', 'concat:app_css', 'clean:post']
 
       images:
         files: ['app/assets/img/**']
@@ -121,30 +125,29 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-concurrent'
   grunt.loadNpmTasks 'grunt-forever'
 
+  grunt.registerTask 'deploy-assets', [
+    'clean:pre',
+    'copy',
+    'less',
+    'coffee',
+    'concat',
+    'clean:post'
+  ]
+
   if config.env is 'development'
 
     grunt.registerTask('default', [
-      'clean:pre',
-      'copy',
-      'less',
-      'coffee',
-      'concat',
-      'clean:post',
+      'deploy-assets',
       'concurrent:dev'
     ])
 
   else if config.env is 'production'
 
     grunt.registerTask('default', [
-      'clean:pre',
-      'copy',
-      'less',
-      'coffee',
-      'concat',
+      'deploy-assets',
       'uglify',
-      'clean:post',
       'forever:start'
     ])
 
     grunt.registerTask('stop', ['forever:stop'])
-    grunt.registerTask('restart', ['forever:restart'])
+    grunt.registerTask('restart', ['deploy-assets', 'forever:restart'])
