@@ -19,7 +19,7 @@ module.exports = (grunt) ->
         dest: 'public/img/'
       fontAwesome:
         expand: true
-        cwd: 'components/flatstrap/assets/font/'
+        cwd: 'bower_components/font-awesome/font/'
         src: '*'
         dest: 'public/font/'
 
@@ -37,7 +37,10 @@ module.exports = (grunt) ->
     less:
       app:
         options:
-          paths: ['components/flatstrap/assets/less']
+          paths: [
+            'bower_components/flatstrap/assets/less',
+            'bower_components/font-awesome/less'
+          ]
           compress: config.env is 'production'
         files:
           'tmp/less_output/app.css': 'app/assets/styles/app.less'
@@ -48,18 +51,23 @@ module.exports = (grunt) ->
         separator: ';'
       app_top_js:
         src: [
-          'components/modernizr/modernizr.js'
+          'bower_components/modernizr/modernizr.js'
         ]
         dest: 'public/js/app_top.js'
       app_js:
-        src: assets_config.app_js.concat [
+        src: [
+          'bower_components/es5-shim/es5-shim.js',
+          'bower_components/jquery/jquery.js',
+          'bower_components/flatstrap/assets/js/bootstrap.js',
+          'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js',
+
           'tmp/coffee_output/*'
         ]
         dest: 'public/js/app.js'
       app_css:
         options:
           separator: '\n'
-        src: assets_config.app_css.concat [
+        src: [
           'tmp/less_output/app.css'
         ]
         dest: 'public/css/app.css'
@@ -74,9 +82,6 @@ module.exports = (grunt) ->
         dest: 'public/js/app.js'
 
     watch:
-      options:
-        livereload: true
-
       scripts:
         files: ['app/assets/scripts/**/*.coffee']
         tasks: ['coffee', 'concat:app_top_js', 'concat:app_js', 'clean:post']
@@ -91,6 +96,11 @@ module.exports = (grunt) ->
 
       templates:
         files: ['app/views/**']
+        options: livereload: true
+
+      livereload:
+        files: ['public/**/*']
+        options: livereload: true
 
       gruntfile:
         files: ['Gruntfile.coffee']
@@ -105,6 +115,8 @@ module.exports = (grunt) ->
       options:
         index: 'app.coffee'
         logDir: 'log'
+        logFile: 'forever.log'
+        errFile: 'forever-err.log'
         command: './node_modules/.bin/coffee'
 
     concurrent:
@@ -149,5 +161,6 @@ module.exports = (grunt) ->
       'forever:start'
     ])
 
+    grunt.registerTask('start', ['forever:start'])
     grunt.registerTask('stop', ['forever:stop'])
-    grunt.registerTask('restart', ['deploy-assets', 'forever:restart'])
+    grunt.registerTask('restart', ['deploy-assets', 'uglify', 'forever:restart'])

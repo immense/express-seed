@@ -1,4 +1,5 @@
 node_modules
+bower_components
 builtAssets
 .DS_Store
 .cake_task_cache

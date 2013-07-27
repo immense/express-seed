@@ -5,7 +5,8 @@
   "dependencies": {
     "es5-shim": "latest",
     "jquery": "latest",
-    "flatstrap": "latest",
+    "flatstrap": "git://github.com/immense/flatstrap.git",
+    "font-awesome": "latest",
     "modernizr": "latest"
   }
 }
