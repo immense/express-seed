@@ -1,5 +1,4 @@
 config = require './app/config/app'
-assets_config = require './app/assets/config'
 
 module.exports = (grunt) ->
   grunt.initConfig {
