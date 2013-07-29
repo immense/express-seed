@@ -37,7 +37,7 @@ module.exports = (grunt) ->
       app:
         options:
           paths: [
-            'bower_components/flatstrap/assets/less',
+            'bower_components/bootstrap/less'
             'bower_components/font-awesome/less'
           ]
           compress: config.env is 'production'
@@ -55,12 +55,12 @@ module.exports = (grunt) ->
         dest: 'public/js/app_top.js'
       app_js:
         src: [
-          'bower_components/es5-shim/es5-shim.js',
-          'bower_components/jquery/jquery.js',
-          'bower_components/flatstrap/assets/js/bootstrap.js',
-          'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js',
+          'bower_components/es5-shim/es5-shim.js'
+          'bower_components/jquery/jquery.js'
+          'bower_components/flatstrap/assets/js/bootstrap.js'
+          'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'
 
-          'tmp/coffee_output/*'
+          'tmp/coffee_output/shoutout.js'
         ]
         dest: 'public/js/app.js'
       app_css:
@@ -137,26 +137,26 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-forever'
 
   grunt.registerTask 'deploy-assets', [
-    'clean:pre',
-    'copy',
-    'less',
-    'coffee',
-    'concat',
+    'clean:pre'
+    'copy'
+    'less'
+    'coffee'
+    'concat'
     'clean:post'
   ]
 
   if config.env is 'development'
 
     grunt.registerTask('default', [
-      'deploy-assets',
+      'deploy-assets'
       'concurrent:dev'
     ])
 
   else if config.env is 'production'
 
     grunt.registerTask('default', [
-      'deploy-assets',
-      'uglify',
+      'deploy-assets'
+      'uglify'
       'forever:start'
     ])
 
