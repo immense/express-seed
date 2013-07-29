@@ -7,4 +7,5 @@ log4js.configure
     { type: 'file', filename: 'log/server.log'}
   ]
 
-log4js.getLogger('server').setLevel config.logLevel.server
+log4js.getLogger('server').setLevel  config.logLevel.server
+log4js.getLogger('process').setLevel config.logLevel.process
