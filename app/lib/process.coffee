@@ -13,6 +13,3 @@ process.on 'SIGTERM', ->
 process.on 'SIGINT', ->
   logger.info 'caught SIGINT'
   process.exit 0
-
-process.on 'exit', ->
-  logger.info 'exiting...'

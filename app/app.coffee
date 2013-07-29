@@ -1,4 +1,6 @@
 start = new Date
+require './lib/process'
+require './lib/pid'
 
 fs = require 'fs'
 
@@ -6,8 +8,6 @@ log4js = require './lib/logger'
 serverLogger = log4js.getLogger 'server'
 socketLogger = log4js.getLogger 'socket'
 
-require './lib/process'
-require './lib/pid'
 config = require './config/app'
 
 if config.socket? then require './lib/socket'
