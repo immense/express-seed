@@ -107,12 +107,12 @@ module.exports = (grunt) ->
     nodemon:
       dev:
         options:
-          file: 'app.coffee'
+          file: 'app/app.coffee'
           watchedFolders: ['app.coffee', 'app', 'node_modules']
 
     forever:
       options:
-        index: 'app.coffee'
+        index: 'app/app.coffee'
         logDir: 'log'
         logFile: 'forever.log'
         errFile: 'forever-err.log'
