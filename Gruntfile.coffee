@@ -108,7 +108,7 @@ module.exports = (grunt) ->
       dev:
         options:
           file: 'app/app.coffee'
-          watchedFolders: ['app.coffee', 'app', 'node_modules']
+          watchedFolders: ['app', 'node_modules']
 
     forever:
       options:
