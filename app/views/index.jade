@@ -57,6 +57,11 @@ block content
           i.icon-ok
           |&nbsp;
           a(href='http://knockoutjs.com/') Knockout
+        li
+          i.icon-ok
+          |&nbsp;
+          a(href='http://passportjs.org/') Passport
+          |&nbsp;(!{user ? 'You are logged in. <a href="/users/logout">Logout</a> or <a href="/users/secret">View secret page</a>.' : 'You are not logged in. <a href="/users/login">Login</a>.'})
 
 block script
   :coffeescript

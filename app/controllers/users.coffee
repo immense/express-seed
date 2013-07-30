@@ -20,7 +20,7 @@ module.exports = (app) ->
 
   app.get '/users/logout', checkAuth, (req, res) ->
     req.logout()
-    res.redirect '/users/login'
+    res.redirect '/'
 
   app.get '/users/secret', checkAuth, (req, res) ->
     res.render 'users/secret'
