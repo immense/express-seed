@@ -26,6 +26,7 @@ io = require('socket.io').listen server, logger: socketLogger, 'log level': log4
 
 # setup controllers
 require('./controllers/index') app
+require('./controllers/users') app
 
 # setup socket.io controller
 # each socket controller is its own instance per socket that connects

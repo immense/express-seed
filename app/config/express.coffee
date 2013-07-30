@@ -1,7 +1,10 @@
 express = require 'express'
+MongoStore = require('connect-mongo') express
 
 conf = require './app'
+mongo_conf = require './mongo'
 
+passport = require '../lib/passport'
 log4js = require '../lib/logger'
 logger = log4js.getLogger 'server'
 
@@ -21,6 +24,13 @@ module.exports = (app) ->
     app.use express.compress()
     app.use express.bodyParser()
     app.use express.methodOverride()
+    app.use express.cookieParser()
+    app.use express.session
+      secret: conf.cookie_secret
+      store: new MongoStore
+        url: mongo_conf.uri
+    app.use passport.initialize()
+    app.use passport.session()
     app.use app.router
 
   app.configure 'development', ->

@@ -6,3 +6,4 @@ module.exports =
   # socket: "/usr/local/var/run/#{appName}.socket"
   pidFile: "/usr/local/var/run/#{appName}.pid"
   env: 'development'
+  cookie_secret: 'super secret cookie key'

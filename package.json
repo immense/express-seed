@@ -14,7 +14,10 @@
     "socket.io": "*",
     "ff": "*",
     "log4js": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-mongo": "*"
   },
   "devDependencies": {
     "grunt": "*",
