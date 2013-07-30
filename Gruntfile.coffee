@@ -26,7 +26,6 @@ module.exports = (grunt) ->
     coffee:
       compile:
         expand: true
-        flatten: true
         cwd: 'app/assets/scripts/'
         src: ['**/*.coffee']
         dest: 'tmp/coffee_output/'

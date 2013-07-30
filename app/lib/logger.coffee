@@ -1,4 +1,4 @@
-config = require '../config/app'
+config = require '../config/logger'
 module.exports = log4js = require 'log4js'
 
 log4js.configure
@@ -7,5 +7,6 @@ log4js.configure
     { type: 'file', filename: 'log/server.log'}
   ]
 
-log4js.getLogger('server').setLevel  config.logLevel.server
-log4js.getLogger('process').setLevel config.logLevel.process
+# set log levels from config
+for logger, level of config
+  log4js.getLogger(logger).setLevel level

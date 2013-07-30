@@ -6,5 +6,7 @@ builtAssets
 *.un~
 *.log
 app/config/app.coffee
+app/config/logger.coffee
+app/config/mongo.coffee
 npm-debug.log
 public/*
