@@ -82,7 +82,7 @@ module.exports = (grunt) ->
     watch:
       scripts:
         files: ['app/assets/scripts/**/*.coffee']
-        tasks: ['coffee', 'concat:app_top_js', 'concat:app_js', 'clean:post']
+        tasks: ['coffee', 'concat:app_js', 'clean:post']
 
       styles:
         files: ['app/assets/styles/**/*.less']
