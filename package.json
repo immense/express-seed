@@ -32,5 +32,8 @@
     "grunt-nodemon": "*",
     "grunt-concurrent": "*",
     "grunt-forever": "*"
+  },
+  "engines": {
+    "node": ">=0.10.x"
   }
 }

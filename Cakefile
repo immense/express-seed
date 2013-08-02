@@ -1,8 +1,6 @@
 ff = require 'ff'
 
 task 'db:seed', 'seed the database with some data', ->
-  crypto = require 'crypto'
-
   User = require './app/models/user'
 
   f = ff()
@@ -13,10 +11,10 @@ task 'db:seed', 'seed the database with some data', ->
   f.next ->
     users = [
       username: 'admin'
-      password: crypto.createHash('sha256').update('p@ssw0rd').digest('hex')
+      password: 'p@ssw0rd'
     ,
       username: 'user'
-      password: crypto.createHash('sha256').update('p@ssw0rd').digest('hex')
+      password: 'p@ssw0rd'
     ]
     User.create users, f.wait()
 
