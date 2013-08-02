@@ -8,7 +8,8 @@ logger = log4js.getLogger 'mongoose'
 mongo_config = require '../config/mongo'
 mongoose.connect mongo_config.uri, mongo_config.options, (err) ->
   if err?
-    logger.fatal 'unable to connect', err
+    logger.fatal 'unable to connect'
+    throw err
   else
     logger.info 'connected'
 

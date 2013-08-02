@@ -1,12 +1,7 @@
 passport = require '../lib/passport'
 User = require "../models/user"
 
-checkAuth = (req, res, next) ->
-  if req.user?
-    next()
-  else
-    res.status 403
-    res.render 'errors/403'
+checkAuth = require './helpers/check-auth'
 
 module.exports = (app) ->
 
