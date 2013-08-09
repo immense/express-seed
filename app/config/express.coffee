@@ -1,26 +1,28 @@
-express = require 'express'
-MongoStore = require('connect-mongo') express
+rootdir       = "#{process.cwd()}"
+appdir        = "#{rootdir}/app"
 
-conf = require './app'
-mongo_conf = require './mongo'
+express       = require 'express'
+MongoStore    = require('connect-mongo') express
+fs            = require 'fs'
 
-passport = require '../lib/passport'
-log4js = require '../lib/logger'
-logger = log4js.getLogger 'server'
+conf          = require './app'
+mongo_conf    = require './mongo'
 
-cwd = process.cwd()
+passport      = require "#{appdir}/lib/passport"
+log4js        = require "#{appdir}/lib/logger"
+logger        = log4js.getLogger 'server'
 
 module.exports = (app) ->
 
   app.configure ->
     app.set 'env', conf.env
     app.set 'port', if conf.socket? then conf.socket else conf.port
-    app.set 'views', "#{cwd}/app/views"
+    app.set 'views', "#{appdir}/views"
     app.set 'view engine', 'jade'
 
     app.use log4js.connectLogger logger, level: 'auto', format: ':method :url :status - :response-time ms'
-    app.use express.static "#{cwd}/public"
-    app.use express.favicon "#{cwd}/app/assets/img/favicon.ico"
+    app.use express.static "#{rootdir}/public"
+    app.use express.favicon "#{appdir}/assets/img/favicon.ico"
     app.use express.compress()
     app.use express.bodyParser()
     app.use express.methodOverride()
@@ -34,26 +36,50 @@ module.exports = (app) ->
     app.use (req, res, next) -> res.locals.user = req.user; next()
     app.use app.router
 
-  app.configure 'development', ->
-    app.use express.errorHandler dumpExceptions: true, showStack: true
+    # catch errors and respond with 500
+    app.use (err, req, res, next) ->
+      res.status 500
 
-  app.configure 'production', ->
-    app.use express.errorHandler()
+      switch req.accepts 'image, html, json, text'
 
-    # set up 404 routes
+        when 'html'
+          res.render 'errors/500', { error: err, stack: err.stack }
+
+        when 'json'
+          res.send { error: err.toString(), stack: err.stack }
+
+        when 'image'
+          res.set 'content-type', 'image/png'
+          fs.createReadStream("#{appdir}/assets/img/500.png").pipe res
+
+        when 'text'
+          res.type('txt')
+            .send "500 Internal server error.\n#{err.toString()}\n#{err.stack}"
+
+        else
+          res.status 406 # not acceptable
+          res.end()
+
+    # everything else is a 404
     app.use (req, res) ->
       res.status 404
 
-      # respond with html page
-      if req.accepts 'html'
-        res.render 'errors/404', { url: req.url }
-        return
+      switch req.accepts 'image, html, json, text'
 
-      # respond with json
-      if req.accepts 'json'
-        res.send { error: '404 Not found', url: req.url }
-        return
+        when 'html'
+          res.render 'errors/404', { url: req.url }
 
-      # default to plain-text. send()
-      res.type('txt')
-        .send "404 Not found.\nThe requested URL '#{req.url}' was not found on this server."
+        when 'json'
+          res.send { error: '404 Not found', url: req.url }
+
+        when 'image'
+          res.set 'content-type', 'image/png'
+          fs.createReadStream("#{appdir}/assets/img/404.png").pipe res
+
+        when 'text'
+          res.type('txt')
+            .send "404 Not found.\nThe requested URL '#{req.url}' was not found on this server."
+
+        else
+          res.status 406 # not acceptable
+          res.end()
