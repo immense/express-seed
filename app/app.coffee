@@ -13,11 +13,8 @@ loggerConfig = require './config/logger'
 
 if config.socket? then require './lib/socket'
 
-express = require 'express'
-
 # create and configure the express app
-module.exports = app = express()
-require('./config/express') app
+app = require './lib/express'
 env = app.settings.env
 
 # create the http and socket.io server
