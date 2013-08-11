@@ -12,9 +12,11 @@ task 'db:seed', 'seed the database with some data', ->
     users = [
       username: 'admin'
       password: 'p@ssw0rd'
+      roles:    ['admin']
     ,
       username: 'user'
       password: 'p@ssw0rd'
+      roles:    ['user']
     ]
     User.create users, f.wait()
 

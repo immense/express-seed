@@ -4,9 +4,17 @@ hasher = new NodePbkdf2
 mongoose = require '../datasources/mongoose'
 {Schema} = mongoose
 
+RoleSchema =
+  type: String
+  enum: [
+    'user'
+    'admin'
+  ]
+
 UserSchema = new Schema
   username: String
   password: String
+  roles:    type: [RoleSchema], default: ['user']
 
 UserSchema.pre 'save', (next) ->
   return next() unless @isModified 'password'

@@ -7,6 +7,7 @@ fs            = require 'fs'
 
 conf          = require './app'
 mongo_conf    = require './mongo'
+roles         = require './roles'
 
 passport      = require "#{appdir}/lib/passport"
 log4js        = require "#{appdir}/lib/logger"
@@ -33,7 +34,7 @@ module.exports = (app) ->
         url: mongo_conf.uri
     app.use passport.initialize()
     app.use passport.session()
-    app.use (req, res, next) -> res.locals.user = req.user; next()
+    app.use roles
     app.use app.router
 
     # catch errors and respond with 500
@@ -43,18 +44,18 @@ module.exports = (app) ->
       switch req.accepts 'image, html, json, text'
 
         when 'html'
-          res.render 'errors/500', { error: err, stack: err.stack }
+          res.render 'errors/500', error: err, stack: err.stack
 
         when 'json'
-          res.send { error: err.toString(), stack: err.stack }
+          res.send error: err.toString(), stack: err.stack
 
         when 'image'
           res.set 'content-type', 'image/png'
           fs.createReadStream("#{appdir}/assets/img/500.png").pipe res
 
         when 'text'
-          res.type('txt')
-            .send "500 Internal server error.\n#{err.toString()}\n#{err.stack}"
+          res.set 'content-type', 'text/plain'
+          res.send "500 Internal server error.\n#{err.toString()}\n#{err.stack}"
 
         else
           res.status 406 # not acceptable
@@ -67,18 +68,18 @@ module.exports = (app) ->
       switch req.accepts 'image, html, json, text'
 
         when 'html'
-          res.render 'errors/404', { url: req.url }
+          res.render 'errors/404', url: req.url
 
         when 'json'
-          res.send { error: '404 Not found', url: req.url }
+          res.send error: '404 Not found', url: req.url
 
         when 'image'
           res.set 'content-type', 'image/png'
           fs.createReadStream("#{appdir}/assets/img/404.png").pipe res
 
         when 'text'
-          res.type('txt')
-            .send "404 Not found.\nThe requested URL '#{req.url}' was not found on this server."
+          res.set 'content-type', 'text/plain'
+          res.send "404 Not found.\nThe requested URL '#{req.url}' was not found on this server."
 
         else
           res.status 406 # not acceptable

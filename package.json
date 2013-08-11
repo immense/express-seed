@@ -17,7 +17,8 @@
     "mongoose": "*",
     "passport": "*",
     "passport-local": "*",
-    "connect-mongo": "*"
+    "connect-mongo": "*",
+    "connect-roles": "*"
   },
   "devDependencies": {
     "grunt": "*",
