@@ -55,18 +55,18 @@ roles.setFailureHandler (req, res, action) ->
 # The first one to return true or false results in "allowed" or "denied" respectively.
 # Returning null results in the next strategy being tried.
 
-actionsAllowedByAnyone = ['login', 'logout']
+actionsAllowedByAnyone = ['logout']
 
 # checked for all actions
 roles.use (req, action) ->
   if not req.user.isAuthenticated           # if you're not authenticated
-    action is 'login'                       #   only the login action is allowed
+    false                                   #   then you're not allowed.
   else if action in actionsAllowedByAnyone  # if you're trying to do any action that any authenticated user can do
-    true                                    #   any authenticated user is allowed
+    true                                    #   then you're allowed.
   else if action in req.user.roles          # if the action you're performing is a role name you have
-    true                                    #   then you're allowed
-  else
-    null
+    true                                    #   then you're allowed.
+  else                                      # otherwise
+    null                                    #   move on to the next strategy
 
 # checked for specific actions
 roles.use 'view secret', (req) ->

@@ -13,7 +13,7 @@ module.exports = (app) ->
 
   app.post '/users/login', passport.authenticate 'local', successRedirect: '/users/secret', failureRedirect: '/users/login'
 
-  app.get '/users/logout', (req, res) ->
+  app.get '/users/logout', can('logout'), (req, res) ->
     req.logout()
     res.redirect '/'
 
