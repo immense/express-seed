@@ -5,7 +5,7 @@
   "dependencies": {
     "es5-shim": "latest",
     "jquery": "latest",
-    "bootstrap": "3.0.0-rc1",
+    "bootstrap": "latest",
     "font-awesome": "latest",
     "modernizr": "latest",
     "knockout.js": "latest"
