@@ -1,4 +1,7 @@
-config = require './app/config/app'
+fs = require 'fs'
+
+if fs.existsSync './app/config/app.coffee'
+  config = require './app/config/app'
 
 module.exports = (grunt) ->
   grunt.initConfig {
@@ -39,7 +42,7 @@ module.exports = (grunt) ->
             'bower_components/bootstrap/less'
             'bower_components/font-awesome/less'
           ]
-          compress: config.env is 'production'
+          compress: config?.env is 'production'
         files:
           'tmp/less_output/app.css': 'app/assets/styles/app.less'
 
@@ -122,6 +125,15 @@ module.exports = (grunt) ->
         tasks: ['nodemon:dev', 'watch']
         options:
           logConcurrentOutput: true
+
+    shell:
+      copyConfigs:
+        options: stdout: true
+        command: """
+          cp app/config/app.sample.coffee app/config/app.coffee
+          cp app/config/logger.sample.coffee app/config/logger.coffee
+          cp app/config/mongo.sample.coffee app/config/mongo.coffee
+        """
   }
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -134,6 +146,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-nodemon'
   grunt.loadNpmTasks 'grunt-concurrent'
   grunt.loadNpmTasks 'grunt-forever'
+  grunt.loadNpmTasks 'grunt-shell'
 
   grunt.registerTask 'deploy-assets', [
     'clean:pre'
@@ -144,14 +157,16 @@ module.exports = (grunt) ->
     'clean:post'
   ]
 
-  if config.env is 'development'
+  grunt.registerTask 'setup', ['shell:copyConfigs']
+
+  if config?.env is 'development'
 
     grunt.registerTask('default', [
       'deploy-assets'
       'concurrent:dev'
     ])
 
-  else if config.env is 'production'
+  else if config?.env is 'production'
 
     grunt.registerTask('default', [
       'deploy-assets'
@@ -161,4 +176,4 @@ module.exports = (grunt) ->
 
     grunt.registerTask('start', ['forever:start'])
     grunt.registerTask('stop', ['forever:stop'])
-    grunt.registerTask('restart', ['deploy-assets', 'uglify', 'forever:restart'])
+    grunt.registerTask('restart', ['deploy-assets', 'uglify', 'forever:stop', 'forever:start'])

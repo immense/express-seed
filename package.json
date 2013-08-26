@@ -32,7 +32,8 @@
     "grunt-contrib-watch": "*",
     "grunt-nodemon": "*",
     "grunt-concurrent": "*",
-    "grunt-forever": "*"
+    "grunt-forever": "*",
+    "grunt-shell": "*"
   },
   "engines": {
     "node": ">=0.10.x"
