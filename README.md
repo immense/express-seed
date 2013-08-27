@@ -20,48 +20,98 @@ A jumping-off point for node+express based web applications.
 
 ## How to run in development mode:
 
-* clone the app:
-  * `git clone gitlab@gitlab.immense.net:seeds/express-seed.git`
-  * `cd express-seed`
-* install server dependencies:
-  * `npm install`
-* install client dependencies:
-  * `bower install`
+* clone the app and install dependencies:
+
+```bash
+git clone gitlab@gitlab.immense.net:seeds/express-seed.git
+cd express-seed
+npm install
+bower install
+```
+
 * copy the sample config files:
-  * `grunt setup`
+
+```bash
+grunt setup
+```
+
 * edit the config files in app/config to your liking
 * run the server using nodemon:
-  * `grunt`
+
+```bash
+grunt
+```
 
 ## How to deploy production
 
 Note: This deploy process is specific to CentOS machines.
 
-* create a user account on the host machine called `express-seed`
-* clone the app into `sites` in the user's home folder:
-  * `mkdir sites`
-  * `cd sites`
-  * `git clone gitlab@gitlab.immense.net:seeds/express-seed.git`
-  * `cd express-seed`
-* install server dependencies:
-  * `npm install`
-* install client dependencies:
-  * `bower install`
+* create a user account on the host machine called `express-seed` and set it up:
+
+```bash
+adduser express-seed
+su - express-seed
+curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+exit
+su - express-seed
+nvm install 0.10
+nvm alias default 0.10
+npm install -g forever grunt-cli bower
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+```
+
+* copy the key into a new deploy key for this app in gitlab
+
+* clone the app into `sites` in the user's home folder and install dependencies:
+
+```bash
+mkdir sites
+cd sites
+git clone gitlab@gitlab.immense.net:seeds/express-seed.git
+cd express-seed
+npm install
+bower install
+```
+
 * copy the sample config files:
-  * `grunt setup`
+
+```bash
+grunt setup
+```
+
 * edit the config files in app/config to your liking
   * Note: make sure to change `env` to `production` in `app/config/app.coffee`
+
 * create the init script and activate the service (as root):
-  * `su -c "grunt setup-service"`
+
+```bash
+su -c "grunt setup-service"
+```
+
 * start the service (as root):
-  * `su -c "service express-seed start"`
+
+```bash
+su -c "service express-seed start"
+```
 
 ## How to update a production deployment
 
 * pull the changes:
-  * `git pull`
+
+```bash
+git pull
+```
+
 * install any new dependencies:
-  * `npm install`
-  * `bower install`
+
+```bash
+npm install
+bower install
+```
+
 * restart the service as root:
-  * `su -c "service express-seed restart"`
+
+```bash
+su -c "service express-seed restart"
+```

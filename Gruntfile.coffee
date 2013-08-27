@@ -141,7 +141,7 @@ module.exports = (grunt) ->
         options:
           stdout: true
           stderr: true
-        command: "chkconfig #{config.appName} on"
+        command: if config? then "chkconfig #{config.appName} on" else "echo 'no config file'"
   }
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
