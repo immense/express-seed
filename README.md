@@ -36,6 +36,13 @@ grunt setup
 ```
 
 * edit the config files in app/config to your liking
+
+* seed the database
+
+```bash
+cake db:seed
+```
+
 * run the server using nodemon:
 
 ```bash
@@ -56,7 +63,7 @@ exit
 su - express-seed
 nvm install 0.10
 nvm alias default 0.10
-npm install -g forever grunt-cli bower
+npm install -g forever grunt-cli bower coffee-script
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 ```
@@ -82,6 +89,12 @@ grunt setup
 
 * edit the config files in app/config to your liking
   * Note: make sure to change `env` to `production` in `app/config/app.coffee`
+
+* seed the database
+
+```bash
+cake db:seed
+```
 
 * create the init script and activate the service (as root):
 
