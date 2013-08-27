@@ -181,7 +181,7 @@ module.exports = (grunt) ->
       output = Mustache.render initScriptContents.toString(), applicationName: config.appName, applicationUser: username
       fs.writeFile "/etc/init.d/#{filename}", output, (err) ->
         if err? then throw err
-        fs.chmod "/etc/init.d/#{filename}", '+x', (err) ->
+        fs.chmod "/etc/init.d/#{filename}", '755', (err) ->
           if err? then throw err
           console.log "init script written to /etc/init.d/#{filename}"
           grunt.task.run 'shell:activateService'
