@@ -96,16 +96,19 @@ grunt setup
 cake db:seed
 ```
 
-* create the init script and activate the service (as root):
+* create the init script and activate the service:
+  * **Note**: the rest of these commands have to be run as root
 
 ```bash
-su -c "grunt setup-service"
+grunt setup-service
+service express-seed start
 ```
 
-* start the service (as root):
+* set up the nginx config and restart nginx
 
 ```bash
-su -c "service express-seed start"
+grunt setup-nginx
+service nginx restart
 ```
 
 ## How to update a production deployment
@@ -123,8 +126,8 @@ npm install
 bower install
 ```
 
-* restart the service as root:
+* restart the service **as root**:
 
 ```bash
-su -c "service express-seed restart"
+service express-seed restart
 ```
