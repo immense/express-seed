@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "grunt",
-    "stop": "grunt stop",
-    "restart": "grunt restart"
+    "start": "grunt production"
   },
   "dependencies": {
     "express": "*",
@@ -22,7 +20,6 @@
   },
   "devDependencies": {
     "grunt": "*",
-    "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-concat": "*",
@@ -33,7 +30,8 @@
     "grunt-nodemon": "*",
     "grunt-concurrent": "*",
     "grunt-forever": "*",
-    "grunt-shell": "*"
+    "grunt-shell": "*",
+    "mustache": "*"
   },
   "engines": {
     "node": ">=0.10.x"

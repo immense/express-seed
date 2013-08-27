@@ -159,21 +159,31 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'setup', ['shell:copyConfigs']
 
-  if config?.env is 'development'
+  grunt.registerTask 'setup-init', ->
+    if not config? then throw new Error 'no app.coffee config file.'
+    filename = config.appName
+    username = config.appUser
+    Mustache = require 'mustache'
+    done = @async()
 
-    grunt.registerTask('default', [
-      'deploy-assets'
-      'concurrent:dev'
-    ])
+    fs.readFile './support/init.sh', (err, initScriptContents) ->
+      if err? then throw err
 
-  else if config?.env is 'production'
+      output = Mustache.render initScriptContents.toString(), applicationName: config.appName, applicationUser: username
+      fs.writeFile "#{filename}", output, (err) ->
+        if err? then throw err
+        console.log "init script written to #{filename}"
+        done()
 
-    grunt.registerTask('default', [
-      'deploy-assets'
-      'uglify'
-      'forever:start'
-    ])
+  grunt.registerTask('default', [
+    'deploy-assets'
+    'concurrent:dev'
+  ])
 
-    grunt.registerTask('start', ['forever:start'])
-    grunt.registerTask('stop', ['forever:stop'])
-    grunt.registerTask('restart', ['deploy-assets', 'uglify', 'forever:stop', 'forever:start'])
+  grunt.registerTask('production', [
+    'deploy-assets'
+    'uglify'
+    'forever:start'
+  ])
+  grunt.registerTask('stop', ['forever:stop'])
+  grunt.registerTask('restart', ['deploy-assets', 'uglify', 'forever:stop', 'forever:start'])
