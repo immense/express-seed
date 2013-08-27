@@ -50,6 +50,7 @@ Note: This deploy process is specific to CentOS machines.
 * copy the sample config files:
   * `grunt setup`
 * edit the config files in app/config to your liking
+  * Note: make sure to change `env` to `production` in `app/config/app.coffee`
 * create and activate the init script:
   * `grunt setup-init`
   * `su -c "mv express-seed /etc/init.d"`
