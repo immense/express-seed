@@ -187,6 +187,34 @@ module.exports = (grunt) ->
           grunt.task.run 'shell:activateService'
           done()
 
+  # this task must be run as root
+  grunt.registerTask 'setup-nginx', ->
+    if not config? then throw new Error 'no app.coffee config file.'
+    appName = config.appName
+    if not appName? then throw new Error 'no appName defined in app.coffee.'
+    socketFile = config.socket
+    if not socketFile? then throw new Error 'not configured to run on a unix socket.'
+    serverNames = config.serverNames
+    if not serverNames? then throw new Error 'no serverNames defined in app.coffee.'
+    Mustache = require 'mustache'
+    done = @async()
+
+    locals =
+      appName: appName
+      socketFile: socketFile
+      serverNames: serverNames
+
+    filename = serverNames.split(' ')[0]
+
+    fs.readFile './support/nginx.conf', (err, configContents) ->
+      if err? then throw err
+
+      output = Mustache.render configContents.toString(), locals
+      fs.writeFile "/opt/nginx/staticvhosts/#{filename}", output, (err) ->
+        if err? then throw err
+        console.log "nginx vhost config file written to /opt/nginx/staticvhosts/#{filename}"
+        done()
+
   grunt.registerTask('default', [
     'deploy-assets'
     'concurrent:dev'
