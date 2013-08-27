@@ -128,12 +128,20 @@ module.exports = (grunt) ->
 
     shell:
       copyConfigs:
-        options: stdout: true
+        options:
+          stdout: true
+          stderr: true
         command: """
           cp app/config/app.sample.coffee app/config/app.coffee
           cp app/config/logger.sample.coffee app/config/logger.coffee
           cp app/config/mongo.sample.coffee app/config/mongo.coffee
         """
+      # this task must be run as root
+      activateService:
+        options:
+          stdout: true
+          stderr: true
+        command: "chkconfig #{config.appName} on"
   }
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -159,7 +167,8 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'setup', ['shell:copyConfigs']
 
-  grunt.registerTask 'setup-init', ->
+  # this task must be run as root
+  grunt.registerTask 'setup-service', ->
     if not config? then throw new Error 'no app.coffee config file.'
     filename = config.appName
     username = config.appUser
@@ -170,10 +179,13 @@ module.exports = (grunt) ->
       if err? then throw err
 
       output = Mustache.render initScriptContents.toString(), applicationName: config.appName, applicationUser: username
-      fs.writeFile "#{filename}", output, (err) ->
+      fs.writeFile "/etc/init.d/#{filename}", output, (err) ->
         if err? then throw err
-        console.log "init script written to #{filename}"
-        done()
+        fs.chmod "/etc/init.d/#{filename}", '+x', (err) ->
+          if err? then throw err
+          console.log "init script written to /etc/init.d/#{filename}"
+          grunt.task.run 'shell:activateService'
+          done()
 
   grunt.registerTask('default', [
     'deploy-assets'
