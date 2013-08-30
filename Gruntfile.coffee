@@ -106,6 +106,14 @@ module.exports = (grunt) ->
       gruntfile:
         files: ['Gruntfile.coffee']
 
+      npm:
+        files: ['package.json']
+        tasks: ['shell:npm']
+
+      bower:
+        files: ['bower.json']
+        tasks: ['shell:bower']
+
     nodemon:
       dev:
         options:
@@ -142,6 +150,16 @@ module.exports = (grunt) ->
           stdout: true
           stderr: true
         command: if config? then "chkconfig #{config.appName} on" else "echo 'no config file'"
+      npm:
+        options:
+          stdout: true
+          stderr: true
+        command: 'npm prune && npm install'
+      bower:
+        options:
+          stdout: true
+          stderr: true
+        command: 'bower prune && bower install'
   }
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
