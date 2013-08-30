@@ -106,6 +106,7 @@ module.exports = (grunt) ->
 
       gruntfile:
         files: ['Gruntfile.coffee']
+        tasks: ['deploy-assets']
 
       npm:
         files: ['package.json']
