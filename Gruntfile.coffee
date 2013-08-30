@@ -60,6 +60,7 @@ module.exports = (grunt) ->
           'bower_components/es5-shim/es5-shim.js'
           'bower_components/jquery/jquery.js'
           'bower_components/bootstrap/dist/js/bootstrap.js'
+          'bower_components/knockout.js/knockout.js'
           'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'
 
           'tmp/coffee_output/shoutout.js'
