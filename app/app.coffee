@@ -19,7 +19,7 @@ env = app.settings.env
 
 # create the http and socket.io server
 server = require('http').createServer app
-io = require('socket.io').listen server, logger: socketLogger, 'log level': log4js.levels[loggerConfig.socket]
+io = require('socket.io').listen server, logger: socketLogger, 'log level': log4js.levels[loggerConfig.levels.socket]
 
 # setup controllers
 require('./controllers/index') app
