@@ -16,7 +16,8 @@
     "passport": "*",
     "passport-local": "*",
     "connect-mongo": "*",
-    "connect-roles": "*"
+    "connect-roles": "*",
+    "sugar": "*"
   },
   "devDependencies": {
     "grunt": "*",
