@@ -1,5 +1,7 @@
+{appName} = require('./app')
+
 module.exports =
-  uri: 'mongodb://localhost/express-seed'
+  uri: "mongodb://localhost/#{appName}"
   options:
     server:
       poolSize: 5
