@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "modernizr": "latest",
+    "respond": "latest",
     "es5-shim": "latest",
     "jquery": "latest",
     "bootstrap": "latest",
     "font-awesome": "latest",
-    "modernizr": "latest",
     "knockout.js": "latest",
-    "sugar": "latest"
+    "sugar": "latest",
+    "requirejs": "latest"
   }
 }

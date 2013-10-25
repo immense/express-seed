@@ -21,9 +21,9 @@ module.exports = (grunt) ->
         dest: 'public/img/'
       fontAwesome:
         expand: true
-        cwd: 'bower_components/font-awesome/font/'
+        cwd: 'bower_components/font-awesome/fonts/'
         src: '*'
-        dest: 'public/font/'
+        dest: 'public/fonts/'
 
     # compile coffeescript files
     coffee:
@@ -50,18 +50,19 @@ module.exports = (grunt) ->
     concat:
       options:
         separator: ';'
-      app_top_js:
+      compat_js:
         src: [
           'bower_components/modernizr/modernizr.js'
+          'bower_components/response/respond.src.js'
+          'bower_components/es5-shim/es5-shim.js'
         ]
-        dest: 'public/js/app_top.js'
+        dest: 'public/js/compat.js'
       app_js:
         src: [
-          'bower_components/es5-shim/es5-shim.js'
+          'bower_components/sugar/release/sugar.min.js'
           'bower_components/jquery/jquery.js'
           'bower_components/bootstrap/dist/js/bootstrap.js'
           'bower_components/knockout.js/knockout.js'
-          'bower_components/sugar/release/sugar.min.js'
           'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'
 
           'tmp/coffee_output/shoutout.js'
@@ -77,9 +78,9 @@ module.exports = (grunt) ->
 
     # uglifyjs files
     uglify:
-      app_top:
-        src: 'public/js/app_top.js'
-        dest: 'public/js/app_top.js'
+      compat:
+        src: 'public/js/compat.js'
+        dest: 'public/js/compat.js'
       app:
         src: 'public/js/app.js'
         dest: 'public/js/app.js'
