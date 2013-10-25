@@ -7,4 +7,4 @@ if fs.existsSync lockFile
 
 fs.writeFileSync lockFile, "#{process.pid}\n"
 
-process.on 'exit', -> fs.unlink lockFile
+process.on 'cleanup', -> fs.unlinkSync lockFile
