@@ -24,6 +24,11 @@ module.exports = (grunt) ->
         cwd: 'bower_components/font-awesome/fonts/'
         src: '*'
         dest: 'public/fonts/'
+      glyphIcons:
+        expand: true
+        cwd: 'bower_components/bootstrap/fonts/'
+        src: '*'
+        dest: 'public/fonts/'
 
     # compile coffeescript files
     coffee:
