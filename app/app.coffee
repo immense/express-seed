@@ -1,5 +1,5 @@
 start = new Date
-require './lib/lock'
+# require './lib/lock'
 require './lib/process'
 
 fs = require 'fs'

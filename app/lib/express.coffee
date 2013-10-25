@@ -41,6 +41,8 @@ app.configure ->
   app.use (err, req, res, next) ->
     res.status 500
 
+    logger.error "\n"+err.stack
+
     switch req.accepts 'image, html, json, text'
 
       when 'html'

@@ -1,4 +1,6 @@
-fs = require 'fs'
+appdir = "#{process.cwd()}/app"
+
+fs     = require 'fs'
 
 roles = module.exports = require 'connect-roles'
 

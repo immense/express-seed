@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  .container
+    h1 Error tests
+
+    hr
+
+    if user.isAuthenticated
+      p You are logged in as "#{user.username}". <a href="/users/logout">Logout</a>.
+    else
+      p You are not logged in. <a href="/users/login">Login</a>.
+
+    p These are the standard error pages you might see.
+
+    ul
+      li
+        a(href='/401') 401
+        |&nbsp;(will work if you are <b>not</b> logged in)
+      li
+        a(href='/403') 403
+        |&nbsp;(will work if you <b>are</b> logged in, but <b>not</b> as admin)
+      li: a(href='/404') 404
+      li: a(href='/500') 500
+
+    p The images below demonstrate the same errors being requested as images.
+
+    img.img-thumbnail(src='/401')
+    |&nbsp;
+    img.img-thumbnail(src='/403')
+    |&nbsp;
+    img.img-thumbnail(src='/404')
+    |&nbsp;
+    img.img-thumbnail(src='/500')
+
+    p View console output to see AJAX serving the errors as JSON.
+
+block script
+  :coffeescript
+    $ ->
+      console.log 'waiting 2 seconds before doing ajax stuff...'
+      setTimeout ->
+        console.log '<------------------->'
+        req1 = $.getJSON '/401'
+        req1.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /401": ', jqXHR.responseJSON
+
+        req2 = $.getJSON '/403'
+        req2.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /403": ', jqXHR.responseJSON
+
+        req3 = $.getJSON '/404'
+        req3.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /404": ', jqXHR.responseJSON
+
+        req4 = $.getJSON '/500'
+        req4.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /500": ', jqXHR.responseJSON
+      , 2000

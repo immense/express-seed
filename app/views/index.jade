@@ -67,6 +67,8 @@ block content
           a(href='http://passportjs.org/') Passport
           |&nbsp;(!{user.isAuthenticated ? 'You are logged in. <a href="/users/logout">Logout</a> or <a href="/users/secret">View secret page</a>.' : 'You are not logged in. <a href="/users/login">Login</a>.'})
 
+      p View the <a href='/errors'>errors test page</a>.
+
 block script
   :coffeescript
     $ ->
