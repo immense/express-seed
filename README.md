@@ -105,11 +105,12 @@ su -c "grunt setup-service"
 su -c "service express-seed start"
 ```
 
-* set up the nginx config and restart nginx
+* set up the nginx config and reload the nginx config
 
 ```bash
 su -c "grunt setup-nginx"
-su -c "service nginx restart"
+su -c "ensite express-seed.dev.app.immense.net"
+su -c "service nginx reload"
 ```
 
 ## How to update a production deployment
