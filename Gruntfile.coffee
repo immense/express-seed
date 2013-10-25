@@ -246,6 +246,34 @@ module.exports = (grunt) ->
         console.log "nginx vhost config file written to #{confPath}/#{filename}"
         done()
 
+  grunt.registerTask 'db:seed', ->
+    ff = require 'ff'
+    User = require './app/models/user'
+
+    f = ff()
+
+    f.next ->
+      User.find({}).remove f.wait()
+
+    f.next ->
+      users = [
+        username: 'admin'
+        password: 'p@ssw0rd'
+        roles:    ['admin']
+      ,
+        username: 'user'
+        password: 'p@ssw0rd'
+        roles:    ['user']
+      ]
+      User.create users, f.wait()
+
+    f.onComplete (err, requisitions) ->
+      if err?
+        console.log 'there was an error: ', err
+      else
+        console.log 'done'
+      process.exit()
+
   grunt.registerTask('default', [
     'deploy-assets'
     'concurrent:dev'
