@@ -147,6 +147,7 @@ module.exports = (grunt) ->
           cp app/config/app.sample.coffee app/config/app.coffee
           cp app/config/logger.sample.coffee app/config/logger.coffee
           cp app/config/mongo.sample.coffee app/config/mongo.coffee
+          cp app/config/nginx.sample.coffee app/config/nginx.coffee
         """
       # this task must be run as root
       activateService:
@@ -211,20 +212,28 @@ module.exports = (grunt) ->
 
   # this task must be run as root
   grunt.registerTask 'setup-nginx', ->
-    if not config? then throw new Error 'no app.coffee config file.'
-    appName = config.appName
-    if not appName? then throw new Error 'no appName defined in app.coffee.'
-    socketFile = config.socket
+    if fs.existsSync './app/config/nginx.coffee'
+      nginx_config = require './app/config/nginx'
+
+    if not nginx_config? then throw new Error 'no nginx.coffee config file.'
+    upstreamName = nginx_config.upstreamName
+    if not upstreamName? then throw new Error 'no upstreamName defined in app.coffee.'
+    socketFile = nginx_config.socketFile
     if not socketFile? then throw new Error 'not configured to run on a unix socket.'
-    serverNames = config.serverNames
+    serverNames = nginx_config.serverNames
     if not serverNames? then throw new Error 'no serverNames defined in app.coffee.'
+    publicRoot = nginx_config.publicRoot
+    if not publicRoot? then throw new Error 'no publicRoot defined in app.coffee.'
+    confPath = nginx_config.confPath
+    if not confPath? then throw new Error 'no confPath defined in app.coffee.'
     Mustache = require 'mustache'
     done = @async()
 
     locals =
-      appName: appName
+      upstreamName: upstreamName
       socketFile: socketFile
       serverNames: serverNames
+      publicRoot: publicRoot
 
     filename = serverNames.split(' ')[0]
 
@@ -232,9 +241,9 @@ module.exports = (grunt) ->
       if err? then throw err
 
       output = Mustache.render configContents.toString(), locals
-      fs.writeFile "/opt/nginx/staticvhosts/#{filename}", output, (err) ->
+      fs.writeFile "#{confPath}/#{filename}", output, (err) ->
         if err? then throw err
-        console.log "nginx vhost config file written to /opt/nginx/staticvhosts/#{filename}"
+        console.log "nginx vhost config file written to #{confPath}/#{filename}"
         done()
 
   grunt.registerTask('default', [
