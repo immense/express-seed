@@ -40,7 +40,7 @@ grunt setup
 * seed the database
 
 ```bash
-cake db:seed
+grunt db:seed
 ```
 
 * run the server using nodemon:
@@ -93,7 +93,7 @@ grunt setup
 * seed the database
 
 ```bash
-cake db:seed
+grunt db:seed
 ```
 
 * create the init script and activate the service:
