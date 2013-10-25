@@ -57,6 +57,7 @@ Note: This deploy process is specific to CentOS machines.
 
 ```bash
 adduser express-seed
+chmod 755 /home/express-seed
 su - express-seed
 curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 exit
