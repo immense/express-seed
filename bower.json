@@ -10,7 +10,6 @@
     "bootstrap": "latest",
     "font-awesome": "latest",
     "knockout.js": "latest",
-    "sugar": "latest",
-    "requirejs": "latest"
+    "sugar": "latest"
   }
 }
