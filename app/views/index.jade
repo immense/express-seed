@@ -1,73 +1,74 @@
 extends layout
 
 block content
-  .container
-    .row.well.seed-masthead
+  .jumbotron
+    .container
       img.pull-left(src='/img/seed.png')
       h1 Immense Express Seed
-    .row
-      h2 This seed contains the following:
-      ul.list-unstyled
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://expressjs.com/') Express
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://twitter.github.io/bootstrap/') Bootstrap 3
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://fortawesome.github.com/Font-Awesome/') Font Awesome
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://jquery.com/') jQuery
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://lesscss.org/') Less
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://coffeescript.org/') CoffeeScript
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://jade-lang.com/') Jade
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://socket.io/') Socket.IO
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://modernizr.com/') Modernizr
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='https://github.com/kriskowal/es5-shim') es5-shim
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://sugarjs.com/') Sugar.js
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://knockoutjs.com/') Knockout
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://mongoosejs.com/') Mongoose
-          |&nbsp;(There #{users_count == 1 ? 'is' : 'are'} #{users_count} user#{users_count == 1 ? '' : 's'} in the database)
-        li
-          i.fa.fa-check
-          |&nbsp;
-          a(href='http://passportjs.org/') Passport
-          |&nbsp;(!{user.isAuthenticated ? 'You are logged in. <a href="/users/logout">Logout</a> or <a href="/users/secret">View secret page</a>.' : 'You are not logged in. <a href="/users/login">Login</a>.'})
 
-      p View the <a href='/errors'>errors test page</a>.
+  .container
+    h2 This seed contains the following:
+    ul.list-unstyled
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://expressjs.com/') Express
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://twitter.github.io/bootstrap/') Bootstrap 3
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://fortawesome.github.com/Font-Awesome/') Font Awesome
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://jquery.com/') jQuery
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://lesscss.org/') Less
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://coffeescript.org/') CoffeeScript
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://jade-lang.com/') Jade
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://socket.io/') Socket.IO
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://modernizr.com/') Modernizr
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='https://github.com/kriskowal/es5-shim') es5-shim
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://sugarjs.com/') Sugar.js
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://knockoutjs.com/') Knockout
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://mongoosejs.com/') Mongoose
+        |&nbsp;(There #{users_count == 1 ? 'is' : 'are'} #{users_count} user#{users_count == 1 ? '' : 's'} in the database)
+      li
+        i.fa.fa-check
+        |&nbsp;
+        a(href='http://passportjs.org/') Passport
+        |&nbsp;(!{user.isAuthenticated ? 'You are logged in. <a href="/users/logout">Logout</a> or <a href="/users/secret">View secret page</a>.' : 'You are not logged in. <a href="/users/login">Login</a>.'})
+
+    p View the <a href='/errors'>errors test page</a>.
 
 block script
   :coffeescript

@@ -8,6 +8,11 @@ html
     script(type='text/javascript', src='/js/compat.js')
     title Immense Express Seed
   body
+    //if lte IE 8
+      .alert.alert-danger.
+        You are using an <strong>outdated</strong> browser.
+        Please <a href='http://browsehappy.com/'>upgrade your browser</a>
+        to improve your experience.
     block content
     .container
       hr
