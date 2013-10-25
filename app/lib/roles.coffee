@@ -1,3 +1,5 @@
+fs = require 'fs'
+
 roles = module.exports = require 'connect-roles'
 
 roles.setFailureHandler (req, res, action) ->
