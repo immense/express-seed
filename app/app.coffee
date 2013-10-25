@@ -1,6 +1,6 @@
 start = new Date
+require './lib/lock'
 require './lib/process'
-require './lib/pid'
 
 fs = require 'fs'
 
