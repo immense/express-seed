@@ -1,5 +1,6 @@
 start = new Date
-# require './lib/lock'
+
+require 'sugar'
 require './lib/process'
 
 fs = require 'fs'
