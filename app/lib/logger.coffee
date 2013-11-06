@@ -2,10 +2,14 @@ config = require '../config/logger'
 app_config = require '../config/app'
 module.exports = log4js = require 'log4js'
 
-appenders = if app_config.env is 'development'
-  [ { type: 'console' } ]
-else if app_config.env is 'production'
-  [ { type: 'file', filename: config.file, backups: config.backups, maxLogSize: config.max_size} ]
+appenders = [{
+  type: 'file',
+  filename: config.file,
+  backups: config.backups,
+  maxLogSize: config.max_size,
+  layout: type: 'colored'
+}]
+appenders.push {type: 'console'} if app_config.env is 'development'
 
 log4js.configure appenders: appenders
 
