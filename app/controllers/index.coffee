@@ -1,23 +1,31 @@
-{can} = require 'connect-roles'
-
 User = require '../models/user'
 
-module.exports = (app) ->
+# get /
+main = (req, res, next) ->
+  User.count (err, count) ->
+    if err? then return next err
+    res.locals.users_count = count
+    res.render 'index'
 
-  app.get '/', (req, res) ->
-    User.count (err, count) ->
-      if err? then return next err
-      res.locals.users_count = count
-      res.render 'index'
+# get /errors
+errors = (req, res, next) ->
+  res.render 'errors'
 
-  app.get '/errors', (req, res, next) ->
-    res.render 'errors'
+# get /401
+unauthorized = (req, res, next) ->
+  res.send 'You are logged in so I can\'t show you the error.'
 
-  app.get '/401', can('do anything'), (req, res, next) ->
-    res.send 'You are logged in so I can\'t show you the error.'
+# get /403
+forbidden = (req, res, next) ->
+  res.send 'You are logged in as admin so I can\'t show you the error.'
 
-  app.get '/403', can('do this'), (req, res, next) ->
-    res.send 'You are logged in as admin so I can\'t show you the error.'
+# get /500
+serverError = (req, res, next) ->
+  next new Error 'A wild error appears!'
 
-  app.get '/500', (req, res, next) ->
-    next new Error 'A wild error appears!'
+module.exports =
+  main: main
+  errors: errors
+  unauthorized: unauthorized
+  forbidden: forbidden
+  serverError: serverError
