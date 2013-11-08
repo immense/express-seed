@@ -35,6 +35,7 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
   app.use roles
+  app.use (req, res, next) -> res.locals.conf = conf; next()
   app.use app.router
 
   # catch errors and respond with 500

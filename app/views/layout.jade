@@ -16,6 +16,12 @@ html
     block content
     .container
       hr
-      footer © Immense Networks 2013
+      footer
+        p © Immense Networks 2013
+        p.text-muted: small
+          |Version #{conf.version}
+          if conf.env == 'development'
+            |&nbsp;&mdash; dev &mdash;&nbsp;
+            a(href=conf.hashLink)= conf.hash
     script(type='text/javascript', src='/js/app.js')
     block script
