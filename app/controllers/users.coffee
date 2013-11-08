@@ -1,24 +1,25 @@
-{can} = require 'connect-roles'
+# get /users/login
+login = (req, res) ->
+  if req.user.isAuthenticated
+    res.redirect '/users/secret'
+  else
+    res.render 'users/login'
 
-passport = require '../lib/passport'
-User = require "../models/user"
+# get /users/logout
+logout = (req, res) ->
+  req.logout()
+  res.redirect '/'
 
-module.exports = (app) ->
+# get /users/secret
+secret = (req, res) ->
+  res.render 'users/secret'
 
-  app.get '/users/login', (req, res) ->
-    if req.user.isAuthenticated
-      res.redirect '/users/secret'
-    else
-      res.render 'users/login'
+# get /users/admin-secret
+adminSecret = (req, res) ->
+  res.render 'users/admin-secret'
 
-  app.post '/users/login', passport.authenticate 'local', successRedirect: '/users/secret', failureRedirect: '/users/login'
-
-  app.get '/users/logout', can('logout'), (req, res) ->
-    req.logout()
-    res.redirect '/'
-
-  app.get '/users/secret', can('view secret'), (req, res) ->
-    res.render 'users/secret'
-
-  app.get '/users/admin-secret', can('view admin secret'), (req, res) ->
-    res.render 'users/admin-secret'
+module.exports =
+  login: login
+  logout: logout
+  secret: secret
+  adminSecret: adminSecret

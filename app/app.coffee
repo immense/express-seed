@@ -20,16 +20,7 @@ env = app.settings.env
 
 # create the http and socket.io server
 server = require('http').createServer app
-io = require('socket.io').listen server, logger: socketLogger, 'log level': log4js.levels[loggerConfig.levels.socket]
-
-# setup controllers
-require('./controllers/index') app
-require('./controllers/users') app
-
-# setup socket.io controller
-# each socket controller is its own instance per socket that connects
-io.sockets.on 'connection', (socket) ->
-  require('./controllers/socket') socket
+app.io = require('socket.io').listen server, logger: socketLogger, 'log level': log4js.levels[loggerConfig.levels.socket]
 
 # delete the socket file if it exists (from a previous crash)
 if config.socket? and fs.existsSync config.socket
@@ -43,3 +34,5 @@ server.listen app.settings.port, ->
   port = if config.socket? then 'socket' else 'port'
   time = new Date - start
   serverLogger.info "#{config.appName} started on #{port} #{app.settings.port} (#{env} mode) in #{time}ms"
+
+module.exports = app

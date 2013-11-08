@@ -25,7 +25,8 @@ app.configure ->
   app.use express.static "#{rootdir}/public"
   app.use express.favicon "#{appdir}/assets/img/favicon.ico"
   app.use express.compress()
-  app.use express.bodyParser()
+  app.use express.urlencoded()
+  app.use express.json()
   app.use express.methodOverride()
   app.use express.cookieParser()
   app.use express.session
