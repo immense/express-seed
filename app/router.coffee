@@ -10,6 +10,7 @@ app.get '/errors', index.errors
 app.get '/401', can('do anything'), index.unauthorized
 app.get '/403', can('do this'), index.forbidden
 app.get '/500', index.serverError
+app.get '/502', index.badGateway
 
 # Users
 users = require './controllers/users'

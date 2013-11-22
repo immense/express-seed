@@ -33,6 +33,7 @@
     "grunt-contrib-clean": "*",
     "grunt-contrib-copy": "*",
     "grunt-contrib-watch": "*",
+    "grunt-contrib-jade": "*",
     "grunt-nodemon": "*",
     "grunt-concurrent": "*",
     "grunt-forever": "*",
