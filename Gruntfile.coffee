@@ -240,7 +240,7 @@ module.exports = (grunt) ->
       serverNames: serverNames
       publicRoot: publicRoot
 
-    filename = serverNames.split(' ')[0]
+    filename = config.appName
 
     fs.readFile './support/nginx.conf', (err, configContents) ->
       if err? then throw err
