@@ -30,6 +30,13 @@ module.exports = (grunt) ->
         src: '*'
         dest: 'public/fonts/'
 
+    jade:
+      compile:
+        options:
+          data: debug: false
+        files:
+          'public/502.html': 'app/views/errors/502.jade'
+
     # compile coffeescript files
     coffee:
       compile:
@@ -102,6 +109,10 @@ module.exports = (grunt) ->
       images:
         files: ['app/assets/img/**']
         tasks: ['clean:pre_images', 'copy:images']
+
+      badGateway:
+        files: ['app/views/errors/502.jade']
+        tasks: ['jade']
 
       templates:
         files: ['app/views/**']
@@ -179,6 +190,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-jade'
   grunt.loadNpmTasks 'grunt-nodemon'
   grunt.loadNpmTasks 'grunt-concurrent'
   grunt.loadNpmTasks 'grunt-forever'
@@ -190,6 +202,7 @@ module.exports = (grunt) ->
     'less'
     'coffee'
     'concat'
+    'jade'
     'clean:post'
   ]
 

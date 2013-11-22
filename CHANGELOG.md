@@ -1,5 +1,11 @@
 # Express Seed Changelog
 
+## 0.2.1 -> 7a4861f45c79fcbd32bcf97889efb986df413e27
+*Fri Nov 22 11:10:10 2013 -0600*
+
+1. Added customizable 502 bad gateway error page.
+  * __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/7a4861f45c79fcbd32bcf97889efb986df413e27)__
+
 ## 0.2.0 -> 0.2.1
 *Fri Nov 22 10:13:12 2013 -0600*
 
