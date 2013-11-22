@@ -32,8 +32,6 @@ module.exports = (grunt) ->
 
     jade:
       compile:
-        options:
-          data: debug: false
         files:
           'public/502.html': 'app/views/errors/502.jade'
 
