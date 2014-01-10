@@ -23,7 +23,7 @@ A jumping-off point for node+express based web applications.
 * clone the app and install dependencies:
 
 ```bash
-git clone gitlab@gitlab.immense.net:seeds/express-seed.git
+git clone git@github.com:immense/express-seed.git
 cd express-seed
 npm install
 bower install
@@ -68,14 +68,14 @@ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub
 ```
 
-* copy the key into a new deploy key for this app in gitlab
+* copy the key into a new deploy key for this app
 
 * clone the app into `sites` in the user's home folder and install dependencies:
 
 ```bash
 mkdir sites
 cd sites
-git clone gitlab@gitlab.immense.net:seeds/express-seed.git
+git clone git@github.com:immense/express-seed.git
 cd express-seed
 npm install
 bower install
