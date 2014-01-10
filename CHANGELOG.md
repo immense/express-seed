@@ -1,5 +1,10 @@
 # Express Seed Changelog
 
+## 0.2.3 -> 0.2.4
+*Fri Jan 10 13:51:04 2014 -0600*
+
+1. Deployed to github.
+
 ## 0.2.2 -> 0.2.3
 *Fri Jan 10 13:51:04 2014 -0600*
 
