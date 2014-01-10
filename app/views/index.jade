@@ -71,12 +71,13 @@ block content
     p View the <a href='/errors'>errors test page</a>.
 
 block script
-  :coffeescript
-    $ ->
-      console.log 'connecting to socket.io on the server...'
-      socket = io.connect()
+  script(type='text/javascript')
+    :coffeescript
+      $ ->
+        console.log 'connecting to socket.io on the server...'
+        socket = io.connect()
 
-      socket.on 'connect', ->
-        console.log 'connected!  now let\'s disconnect...'
+        socket.on 'connect', ->
+          console.log 'connected!  now let\'s disconnect...'
 
-        socket.disconnect()
+          socket.disconnect()

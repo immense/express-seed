@@ -14,4 +14,7 @@ mongoose.connect mongo_config.uri, mongo_config.options, (err) ->
     logger.info 'connected'
 
 mongoose.set 'debug', (collectionName, method, query, doc, options) ->
-  logger.debug "#{collectionName}.#{method}(#{util.inspect(query).replace(/\s+/g, ' ').replace /\n/g, ' '})"
+  logger.debug "#{collectionName}.#{method}(#{util.inspect(query, false, Infinity)})"
+
+mongoose.connection.on 'error', (err) ->
+  logger.error err

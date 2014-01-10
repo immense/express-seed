@@ -36,20 +36,21 @@ block content
     p View console output to see AJAX serving the errors as JSON.
 
 block script
-  :coffeescript
-    $ ->
-      console.log 'waiting 2 seconds before doing ajax stuff...'
-      setTimeout ->
-        console.log '<------------------->'
-        req1 = $.getJSON '/401'
-        req1.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /401": ', jqXHR.responseJSON
+  script(type='text/javascript')
+    :coffeescript
+      $ ->
+        console.log 'waiting 2 seconds before doing ajax stuff...'
+        setTimeout ->
+          console.log '<------------------->'
+          req1 = $.getJSON '/401'
+          req1.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /401": ', jqXHR.responseJSON
 
-        req2 = $.getJSON '/403'
-        req2.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /403": ', jqXHR.responseJSON
+          req2 = $.getJSON '/403'
+          req2.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /403": ', jqXHR.responseJSON
 
-        req3 = $.getJSON '/404'
-        req3.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /404": ', jqXHR.responseJSON
+          req3 = $.getJSON '/404'
+          req3.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /404": ', jqXHR.responseJSON
 
-        req4 = $.getJSON '/500'
-        req4.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /500": ', jqXHR.responseJSON
-      , 2000
+          req4 = $.getJSON '/500'
+          req4.fail (jqXHR, textStatus, errorThrown) -> console.log 'response to "GET /500": ', jqXHR.responseJSON
+        , 2000

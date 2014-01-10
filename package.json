@@ -1,6 +1,6 @@
 {
   "name": "express-seed",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "repository": {
     "type": "git",
@@ -11,36 +11,36 @@
     "start": "grunt production"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
-    "coffee-script": "*",
-    "socket.io": "*",
-    "ff": "*",
-    "log4js": "*",
-    "mongoose": "*",
-    "passport": "*",
-    "passport-local": "*",
-    "connect-mongo": "*",
-    "connect-roles": "*",
-    "sugar": "*"
+    "express": "~3.4.7",
+    "jade": "~1.1.4",
+    "coffee-script": "~1.6.3",
+    "socket.io": "~0.9.16",
+    "ff": "~0.2.0",
+    "log4js": "~0.6.9",
+    "mongoose": "~3.8.4",
+    "passport": "~0.1.18",
+    "passport-local": "~0.1.6",
+    "connect-mongo": "~0.4.0",
+    "connect-roles": "~2.1.0",
+    "sugar": "~1.4.1"
   },
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-coffee": "*",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-less": "*",
-    "grunt-contrib-clean": "*",
-    "grunt-contrib-copy": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-jade": "*",
-    "grunt-nodemon": "*",
-    "grunt-concurrent": "*",
-    "grunt-forever": "*",
-    "grunt-shell": "*",
-    "mustache": "*"
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-coffee": "~0.8.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-less": "~0.9.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jade": "~0.9.1",
+    "grunt-nodemon": "~0.1.2",
+    "grunt-concurrent": "~0.4.2",
+    "grunt-forever": "~0.4.1",
+    "grunt-shell": "~0.6.1",
+    "mustache": "~0.8.1"
   },
   "engines": {
-    "node": ">=0.10.x"
+    "node": "~0.10"
   }
 }
