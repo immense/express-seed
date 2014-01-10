@@ -11,8 +11,8 @@
     "start": "grunt production"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
+    "express": "~3.4.7",
+    "jade": "~1.1.4",
     "coffee-script": "*",
     "socket.io": "*",
     "ff": "*",
