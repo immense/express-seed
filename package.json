@@ -1,11 +1,11 @@
 {
   "name": "express-seed",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "gitlab@gitlab.immense.net:seeds/express-seed.git",
-    "web": "http://gitlab.immense.net/seeds/express-seed"
+    "url": "git@github.com:immense/express-seed.git",
+    "web": "https://github.com/immense/express-seed"
   },
   "scripts": {
     "start": "grunt production"
