@@ -1,5 +1,14 @@
 # Express Seed Changelog
 
+## 0.2.4 -> 0.2.5
+*Thu Feb 6 12:37:49 2014 -0600*
+
+1. Updated dependencies.
+1. Use latest nodemon.
+1. Moved assets out of app folder.
+1. Removed socket.io, it's rarely needed in projects based on this seed.
+1. Removed responding to errors with images.
+
 ## 0.2.3 -> 0.2.4
 *Fri Jan 10 13:51:04 2014 -0600*
 

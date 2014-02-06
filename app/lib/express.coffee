@@ -3,7 +3,6 @@ appdir        = "#{rootdir}/app"
 
 express       = require 'express'
 MongoStore    = require('connect-mongo') express
-fs            = require 'fs'
 
 conf          = require "#{appdir}/config/app"
 mongo_conf    = require "#{appdir}/config/mongo"
@@ -23,7 +22,7 @@ app.configure ->
 
   app.use log4js.connectLogger logger, level: 'auto', format: ':method :url :status - :response-time ms'
   app.use express.static "#{rootdir}/public"
-  app.use express.favicon "#{appdir}/assets/img/favicon.ico"
+  app.use express.favicon "#{rootdir}/assets/img/favicon.ico"
   app.use express.compress()
   app.use express.urlencoded()
   app.use express.json()
@@ -45,17 +44,13 @@ app.configure ->
 
     logger.error "\n"+err.stack
 
-    switch req.accepts 'image, html, json, text'
+    switch req.accepts 'html, json, text'
 
       when 'html'
         res.render 'errors/500', error: err, stack: err.stack
 
       when 'json'
         res.send error: err.toString(), stack: err.stack
-
-      when 'image'
-        res.set 'content-type', 'image/png'
-        fs.createReadStream("#{appdir}/assets/img/500.png").pipe res
 
       when 'text'
         res.set 'content-type', 'text/plain'
@@ -69,17 +64,13 @@ app.configure ->
   app.use (req, res) ->
     res.status 404
 
-    switch req.accepts 'image, html, json, text'
+    switch req.accepts 'html, json, text'
 
       when 'html'
         res.render 'errors/404', url: req.url
 
       when 'json'
         res.send error: '404 Not found', url: req.url
-
-      when 'image'
-        res.set 'content-type', 'image/png'
-        fs.createReadStream("#{appdir}/assets/img/404.png").pipe res
 
       when 'text'
         res.set 'content-type', 'text/plain'

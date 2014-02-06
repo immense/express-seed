@@ -6,11 +6,9 @@ require './lib/process'
 fs = require 'fs'
 
 log4js = require './lib/logger'
-serverLogger = log4js.getLogger 'server'
-socketLogger = log4js.getLogger 'socket'
+logger = log4js.getLogger 'server'
 
 config = require './config/app'
-loggerConfig = require './config/logger'
 
 if config.socket? then require './lib/socket'
 
@@ -18,9 +16,8 @@ if config.socket? then require './lib/socket'
 app = require './lib/express'
 env = app.settings.env
 
-# create the http and socket.io server
+# create the http server
 server = require('http').createServer app
-app.io = require('socket.io').listen server, logger: socketLogger, 'log level': log4js.levels[loggerConfig.levels.socket]
 
 # delete the socket file if it exists (from a previous crash)
 if config.socket? and fs.existsSync config.socket
@@ -33,6 +30,6 @@ server.listen app.settings.port, ->
 
   port = if config.socket? then 'socket' else 'port'
   time = new Date - start
-  serverLogger.info "#{config.appName} started on #{port} #{app.settings.port} (#{env} mode) in #{time}ms"
+  logger.info "#{config.appName} started on #{port} #{app.settings.port} (#{env} mode) in #{time}ms"
 
 module.exports = app
