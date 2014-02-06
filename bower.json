@@ -1,6 +1,6 @@
 {
   "name": "express-seed",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
   "dependencies": {
     "modernizr": "~2.7.1",
