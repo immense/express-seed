@@ -20,10 +20,3 @@ app.post '/users/login', passport.authenticate 'local', successRedirect: '/users
 app.get  '/users/logout', can('logout'), users.logout
 app.get  '/users/secret', can('view secret'), users.secret
 app.get  '/users/admin-secret', can('view admin secret'), users.adminSecret
-
-# setup socket.io controller
-# each socket controller is its own instance per socket that connects
-socketContoller = require('./controllers/socket')
-
-app.io.sockets.on 'connection', (socket) ->
-   socketContoller socket

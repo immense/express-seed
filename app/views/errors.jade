@@ -23,16 +23,6 @@ block content
       li: a(href='/404') 404
       li: a(href='/500') 500
 
-    p The images below demonstrate the same errors being requested as images. Note, the first 2 images won't display if you're logged in as admin.
-
-    img.img-thumbnail(src='/401')
-    |&nbsp;
-    img.img-thumbnail(src='/403')
-    |&nbsp;
-    img.img-thumbnail(src='/404')
-    |&nbsp;
-    img.img-thumbnail(src='/500')
-
     p View console output to see AJAX serving the errors as JSON.
 
 block script

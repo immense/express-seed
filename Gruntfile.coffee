@@ -16,7 +16,7 @@ module.exports = (grunt) ->
     copy:
       images:
         expand: true
-        cwd: 'app/assets/img/'
+        cwd: 'assets/img/'
         src: '**'
         dest: 'public/img/'
       fontAwesome:
@@ -39,7 +39,7 @@ module.exports = (grunt) ->
     coffee:
       compile:
         expand: true
-        cwd: 'app/assets/scripts/'
+        cwd: 'assets/scripts/'
         src: ['**/*.coffee']
         dest: 'tmp/coffee_output/'
         ext: '.js'
@@ -54,7 +54,7 @@ module.exports = (grunt) ->
           ]
           compress: config?.env is 'production'
         files:
-          'tmp/less_output/app.css': 'app/assets/styles/app.less'
+          'tmp/less_output/app.css': 'assets/styles/app.less'
 
     # concatenate js files
     concat:
@@ -73,7 +73,6 @@ module.exports = (grunt) ->
           'bower_components/jquery/jquery.js'
           'bower_components/bootstrap/dist/js/bootstrap.js'
           'bower_components/knockout.js/knockout.js'
-          'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'
 
           'tmp/coffee_output/shoutout.js'
         ]
@@ -97,15 +96,15 @@ module.exports = (grunt) ->
 
     watch:
       scripts:
-        files: ['app/assets/scripts/**/*.coffee']
+        files: ['assets/scripts/**/*.coffee']
         tasks: ['coffee', 'concat:app_js', 'clean:post']
 
       styles:
-        files: ['app/assets/styles/**/*.less']
+        files: ['assets/styles/**/*.less']
         tasks: ['less', 'concat:app_css', 'clean:post']
 
       images:
-        files: ['app/assets/img/**']
+        files: ['assets/img/**']
         tasks: ['clean:pre_images', 'copy:images']
 
       badGateway:
@@ -134,9 +133,9 @@ module.exports = (grunt) ->
 
     nodemon:
       dev:
+        script: 'app/index.coffee'
         options:
-          file: 'app/index.coffee'
-          watchedFolders: ['app', 'node_modules']
+          watch: ['app', 'node_modules']
 
     forever:
       options:

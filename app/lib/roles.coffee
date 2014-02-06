@@ -1,7 +1,5 @@
 appdir = "#{process.cwd()}/app"
 
-fs     = require 'fs'
-
 roles = module.exports = require 'connect-roles'
 
 roles.setFailureHandler (req, res, action) ->
@@ -9,17 +7,13 @@ roles.setFailureHandler (req, res, action) ->
   if req.user.isAuthenticated
     res.status 403
 
-    switch req.accepts 'image, html, json, text'
+    switch req.accepts 'html, json, text'
 
       when 'html'
         res.render 'errors/403', action: action
 
       when 'json'
         res.send error: '403 Forbidden', action: action
-
-      when 'image'
-        res.set 'content-type', 'image/png'
-        fs.createReadStream("#{appdir}/assets/img/403.png").pipe res
 
       when 'text'
         res.set 'content-type', 'text/plain'
@@ -32,7 +26,7 @@ roles.setFailureHandler (req, res, action) ->
   else
     res.status 401
 
-    switch req.accepts 'image, html, json, text'
+    switch req.accepts 'html, json, text'
 
       when 'html'
         # either redirect to the login page, or respond with 401.
@@ -42,10 +36,6 @@ roles.setFailureHandler (req, res, action) ->
 
       when 'json'
         res.send error: '401 Unauthorized'
-
-      when 'image'
-        res.set 'content-type', 'image/png'
-        fs.createReadStream("#{appdir}/assets/img/401.png").pipe res
 
       when 'text'
         res.set 'content-type', 'text/plain'
