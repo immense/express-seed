@@ -135,4 +135,4 @@ su -c "service express-seed restart"
 
 ## License
 
-express-seed is released under the MIT License. Please see the LICENSE file for details.
+Express Seed is released under the MIT License. Please see the LICENSE file for details.
