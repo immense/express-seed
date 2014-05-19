@@ -1,5 +1,9 @@
 # Express Seed Changelog
 
+## 0.2.5 -> 0.2.6
+*Mon May 19 13:22:02 2014 -0500*
+1. Fixes grunt-forever
+
 ## 0.2.4 -> 0.2.5
 *Thu Feb 6 12:37:49 2014 -0600*
 

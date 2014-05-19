@@ -1,6 +1,6 @@
 {
   "name": "express-seed",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "grunt-contrib-jade": "~0.9.1",
     "grunt-nodemon": "~0.2.0",
     "grunt-concurrent": "~0.4.3",
-    "grunt-forever": "~0.4.1",
+    "grunt-forever": "0.4.1",
     "grunt-shell": "~0.6.4",
     "mustache": "~0.8.1"
   },
