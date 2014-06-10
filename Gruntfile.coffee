@@ -37,7 +37,7 @@ module.exports = (grunt) ->
 
     # compile coffeescript files
     coffee:
-      compile:
+      glob_to_multiple:
         expand: true
         cwd: 'assets/scripts/'
         src: ['**/*.coffee']
@@ -63,14 +63,14 @@ module.exports = (grunt) ->
       compat_js:
         src: [
           'bower_components/modernizr/modernizr.js'
-          'bower_components/response/respond.src.js'
+          'bower_components/respond/dest/respond.src.js'
           'bower_components/es5-shim/es5-shim.js'
         ]
         dest: 'public/js/compat.js'
       app_js:
         src: [
           'bower_components/sugar/release/sugar.min.js'
-          'bower_components/jquery/jquery.js'
+          'bower_components/jquery/dist/jquery.js'
           'bower_components/bootstrap/dist/js/bootstrap.js'
           'bower_components/knockout.js/knockout.js'
 
@@ -261,16 +261,11 @@ module.exports = (grunt) ->
         console.log "nginx vhost config file written to #{confPath}/#{filename}"
         done()
 
-  grunt.registerTask 'db:seed', ->
-    ff = require 'ff'
+  grunt.registerTask 'db:seed', 'Seeds the database', ->
     User = require './app/models/user'
-
-    f = ff()
-
-    f.next ->
-      User.find({}).remove f.wait()
-
-    f.next ->
+    done = @async()
+    User.find().remove (err) ->
+      if err then throw err
       users = [
         username: 'admin'
         password: 'p@ssw0rd'
@@ -280,14 +275,9 @@ module.exports = (grunt) ->
         password: 'p@ssw0rd'
         roles:    ['user']
       ]
-      User.create users, f.wait()
-
-    f.onComplete (err, requisitions) ->
-      if err?
-        console.log 'there was an error: ', err
-      else
-        console.log 'done'
-      process.exit()
+      User.create users, (err) ->
+        if err then throw err
+        done()
 
   grunt.registerTask('default', [
     'deploy-assets'

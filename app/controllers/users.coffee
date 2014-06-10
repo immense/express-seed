@@ -1,6 +1,6 @@
 # get /users/login
 login = (req, res) ->
-  if req.user.isAuthenticated
+  if req.isAuthenticated()
     res.redirect '/users/secret'
   else
     res.render 'users/login'
