@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><title>app/models/user</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="app/models/user"><meta name="groc-project-path" content="app/models/user.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">app/models/user.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">NodePbkdf2 = </span><span class="nx">require</span> <span class="s">&#39;../lib/node-pbkdf2&#39;</span>
+<span class="nv">hasher = </span><span class="k">new</span> <span class="nx">NodePbkdf2</span>
+
+<span class="nv">mongoose = </span><span class="nx">require</span> <span class="s">&#39;../datasources/mongoose&#39;</span>
+<span class="p">{</span><span class="nx">Schema</span><span class="p">}</span> <span class="o">=</span> <span class="nx">mongoose</span>
+
+<span class="nv">RoleSchema =</span>
+  <span class="nv">type: </span><span class="nb">String</span>
+  <span class="nv">enum: </span><span class="p">[</span>
+    <span class="s">&#39;user&#39;</span>
+    <span class="s">&#39;admin&#39;</span>
+  <span class="p">]</span>
+
+<span class="nv">UserSchema = </span><span class="k">new</span> <span class="nx">Schema</span>
+  <span class="nv">username: </span><span class="nb">String</span>
+  <span class="nv">password: </span><span class="nb">String</span>
+  <span class="nv">roles: </span>   <span class="nv">type: </span><span class="p">[</span><span class="nx">RoleSchema</span><span class="p">],</span> <span class="nv">default: </span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span>
+
+<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">pre</span> <span class="s">&#39;save&#39;</span><span class="p">,</span> <span class="nf">(next) -&gt;</span>
+  <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">@isModified</span> <span class="s">&#39;password&#39;</span>
+
+  <span class="nx">hasher</span><span class="p">.</span><span class="nx">hashPassword</span> <span class="nx">@password</span><span class="p">,</span> <span class="nf">(err, hashedPassword) =&gt;</span>
+    <span class="k">if</span> <span class="nx">err</span><span class="o">?</span> <span class="k">then</span> <span class="k">return</span> <span class="nx">next</span> <span class="nx">err</span>
+
+    <span class="vi">@password = </span><span class="nx">hashedPassword</span>
+    <span class="nx">next</span><span class="p">()</span>
+
+<span class="nv">UserSchema.methods.validPassword = </span><span class="nf">(password, cb) -&gt;</span>
+  <span class="nx">hasher</span><span class="p">.</span><span class="nx">checkPassword</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">@password</span><span class="p">,</span> <span class="nf">(err, valid) -&gt;</span>
+    <span class="k">if</span> <span class="nx">err</span><span class="o">?</span> <span class="k">then</span> <span class="k">return</span> <span class="nx">cb</span> <span class="nx">err</span>
+    <span class="nx">cb</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">valid</span>
+
+<span class="nv">module.exports = </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span> <span class="s">&#39;User&#39;</span><span class="p">,</span> <span class="nx">UserSchema</span></div></div></div></div></body></html>

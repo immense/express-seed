@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="en"><head><title>app/lib/express</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="app/lib/express"><meta name="groc-project-path" content="app/lib/express.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">app/lib/express.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">rootdir        = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span>
+<span class="nv">appdir         = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">rootdir</span><span class="si">}</span><span class="s">/app&quot;</span>
+
+<span class="nv">express        = </span><span class="nx">require</span> <span class="s">&#39;express&#39;</span>
+<span class="nv">favicon        = </span><span class="nx">require</span> <span class="s">&#39;serve-favicon&#39;</span>
+<span class="nv">compress       = </span><span class="nx">require</span> <span class="s">&#39;compression&#39;</span>
+<span class="nv">bodyParser     = </span><span class="nx">require</span> <span class="s">&#39;body-parser&#39;</span>
+<span class="nv">methodOverride = </span><span class="nx">require</span> <span class="s">&#39;method-override&#39;</span>
+<span class="nv">cookieParser   = </span><span class="nx">require</span> <span class="s">&#39;cookie-parser&#39;</span>
+<span class="nv">session        = </span><span class="nx">require</span> <span class="s">&#39;express-session&#39;</span>
+<span class="nv">MongoStore     = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;connect-mongo&#39;</span><span class="p">)</span> <span class="nx">session</span>
+
+<span class="nv">conf           = </span><span class="nx">require</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/config/app&quot;</span>
+<span class="nv">mongo_conf     = </span><span class="nx">require</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/config/mongo&quot;</span>
+
+<span class="nv">passport       = </span><span class="nx">require</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/lib/passport&quot;</span>
+<span class="nv">roles          = </span><span class="nx">require</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/lib/roles&quot;</span>
+<span class="nv">log4js         = </span><span class="nx">require</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/lib/logger&quot;</span>
+<span class="nv">logger         = </span><span class="nx">log4js</span><span class="p">.</span><span class="nx">getLogger</span> <span class="s">&#39;server&#39;</span>
+
+<span class="nv">module.exports = app = </span><span class="nx">express</span><span class="p">()</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;env&#39;</span><span class="p">,</span> <span class="nx">conf</span><span class="p">.</span><span class="nx">env</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;port&#39;</span><span class="p">,</span> <span class="k">if</span> <span class="nx">conf</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span> <span class="k">then</span> <span class="nx">conf</span><span class="p">.</span><span class="nx">socket</span> <span class="k">else</span> <span class="nx">conf</span><span class="p">.</span><span class="nx">port</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;views&#39;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/views&quot;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;view engine&#39;</span><span class="p">,</span> <span class="s">&#39;jade&#39;</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">log4js</span><span class="p">.</span><span class="nx">connectLogger</span> <span class="nx">logger</span><span class="p">,</span> <span class="nv">level: </span><span class="s">&#39;auto&#39;</span><span class="p">,</span> <span class="nv">format: </span><span class="s">&#39;:method :url :status - :response-time ms&#39;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">express</span><span class="p">.</span><span class="nx">static</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">rootdir</span><span class="si">}</span><span class="s">/public&quot;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">favicon</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">rootdir</span><span class="si">}</span><span class="s">/assets/img/favicon.ico&quot;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">compress</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">bodyParser</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">methodOverride</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">cookieParser</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">session</span>
+  <span class="nv">secret: </span><span class="nx">conf</span><span class="p">.</span><span class="nx">cookie_secret</span>
+  <span class="nv">store: </span><span class="k">new</span> <span class="nx">MongoStore</span>
+    <span class="nv">url: </span><span class="nx">mongo_conf</span><span class="p">.</span><span class="nx">uri</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nx">roles</span><span class="p">.</span><span class="nx">middleware</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nf">(req, res, next) -&gt;</span> <span class="nv">res.locals.conf = </span><span class="nx">conf</span><span class="p">;</span> <span class="nx">next</span><span class="p">()</span></div></div></div></div></body></html>

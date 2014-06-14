@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="en"><head><title>app/config/app.sample</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="app/config/app.sample"><meta name="groc-project-path" content="app/config/app.sample.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">app/config/app.sample.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">pkg = </span><span class="nx">require</span> <span class="s">&#39;../../package.json&#39;</span>
+
+<span class="nv">conf =</span>
+  <span class="nv">appName: </span><span class="nx">pkg</span><span class="p">.</span><span class="nx">name</span>
+  <span class="nv">appUser: </span><span class="nx">pkg</span><span class="p">.</span><span class="nx">name</span>
+  <span class="nv">version: </span><span class="nx">pkg</span><span class="p">.</span><span class="nx">version</span>
+  <span class="nv">port: </span><span class="mi">3000</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>socket: "/tmp/#{pkg.name}.sock"</p></div></div><div class="code"><div class="wrapper">  <span class="nv">env: </span><span class="s">&#39;development&#39;</span>
+  <span class="nv">cookie_secret: </span><span class="s">&#39;super secret cookie key&#39;</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get latest git commit hash and branch if in dev environment</p></div></div><div class="code"><div class="wrapper"><span class="k">if</span> <span class="nx">conf</span><span class="p">.</span><span class="nx">env</span> <span class="o">is</span> <span class="s">&#39;development&#39;</span>
+  <span class="nv">exec = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span>
+  <span class="nx">exec</span> <span class="s">&#39;git rev-parse --short HEAD&#39;</span><span class="p">,</span> <span class="nf">(err, stdout, stderr) -&gt;</span>
+    <span class="nv">conf.hash = </span><span class="nx">stdout</span>
+    <span class="nv">conf.hashLink = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">pkg</span><span class="p">.</span><span class="nx">repository</span><span class="p">.</span><span class="nx">web</span><span class="si">}</span><span class="s">/commit/</span><span class="si">#{</span><span class="nx">stdout</span><span class="si">}</span><span class="s">&quot;</span>
+  <span class="nx">exec</span> <span class="s">&#39;git rev-parse --abbrev-ref HEAD&#39;</span><span class="p">,</span> <span class="nf">(err, stdout, stderr) -&gt;</span>
+    <span class="nv">conf.branch = </span><span class="nx">stdout</span>
+
+<span class="nv">module.exports = </span><span class="nx">conf</span></div></div></div></div></body></html>

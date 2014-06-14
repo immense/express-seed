@@ -6,6 +6,22 @@ if fs.existsSync './app/config/app.coffee'
 module.exports = (grunt) ->
   grunt.initConfig {
 
+    groc:
+      javascript: [
+        "**/*.coffee"
+        "README.md"
+      ],
+      options:
+        out: "doc/"
+        except: [
+          "node_modules/**/*"
+          "bower_components/**/*"
+          "app/config/app.coffee"
+          "app/config/logger.coffee"
+          "app/config/mongo.coffee"
+          "app/config/nginx.coffee"
+        ]
+
     # clean up compiled or temporary files
     clean:
       pre: ['public/*']
@@ -192,6 +208,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-concurrent'
   grunt.loadNpmTasks 'grunt-forever'
   grunt.loadNpmTasks 'grunt-shell'
+  grunt.loadNpmTasks 'grunt-groc'
 
   grunt.registerTask 'deploy-assets', [
     'clean:pre'

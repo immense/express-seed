@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en"><head><title>index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="index"><meta name="groc-project-path" content="README.md"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">README.md</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h1 id="express-seed-application">Express Seed Application</h1>
+
+<p>A jumping-off point for node+express based web applications.</p>
+
+<h2 id="included-packages">included packages:</h2>
+
+<ul>
+<li>Express</li>
+<li>Bootstrap 3</li>
+<li>Font Awesome</li>
+<li>jQuery</li>
+<li>Less</li>
+<li>CoffeeScript</li>
+<li>Jade</li>
+<li>Socket.IO</li>
+<li>Modernizr</li>
+<li>es5-shim</li>
+<li>Knockout</li>
+<li>Mongoose</li>
+<li>Passport</li>
+</ul>
+
+<h2 id="how-to-run-in-development-mode">How to run in development mode:</h2>
+
+<ul>
+<li>clone the app and install dependencies:</li>
+</ul>
+
+<pre><code class="bash">git clone git@github.com:immense/express-seed.git
+cd express-seed
+npm install
+bower install
+</code></pre>
+
+<ul>
+<li>copy the sample config files:</li>
+</ul>
+
+<pre><code class="bash">grunt setup
+</code></pre>
+
+<ul>
+<li><p>edit the config files in app/config to your liking</p></li>
+<li><p>seed the database</p></li>
+</ul>
+
+<pre><code class="bash">grunt db:seed
+</code></pre>
+
+<ul>
+<li>run the server using nodemon:</li>
+</ul>
+
+<pre><code class="bash">grunt
+</code></pre>
+
+<h2 id="how-to-deploy-production">How to deploy production</h2>
+
+<p>Note: This deploy process is specific to CentOS machines.</p>
+
+<ul>
+<li>create a user account on the host machine called <code>express-seed</code> and set it up:</li>
+</ul>
+
+<pre><code class="bash">adduser express-seed
+chmod 755 /home/express-seed
+su - express-seed
+curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+source ~/.bash_profile
+nvm install 0.10
+nvm alias default 0.10
+npm install -g forever grunt-cli bower coffee-script
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub
+</code></pre>
+
+<ul>
+<li><p>copy the key into a new deploy key for this app</p></li>
+<li><p>clone the app into <code>sites</code> in the user's home folder and install dependencies:</p></li>
+</ul>
+
+<pre><code class="bash">mkdir sites
+cd sites
+git clone git@github.com:immense/express-seed.git
+cd express-seed
+npm install
+bower install
+</code></pre>
+
+<ul>
+<li>copy the sample config files:</li>
+</ul>
+
+<pre><code class="bash">grunt setup
+</code></pre>
+
+<ul>
+<li><p>edit the config files in app/config to your liking</p>
+
+<ul><li>Note: make sure to change <code>env</code> to <code>production</code> in <code>app/config/app.coffee</code></li></ul></li>
+<li><p>seed the database</p></li>
+</ul>
+
+<pre><code class="bash">grunt db:seed
+</code></pre>
+
+<ul>
+<li>create the init script and activate the service:
+<ul><li><strong>Note</strong>: the rest of these commands have to be run as root</li></ul></li>
+</ul>
+
+<pre><code class="bash">su -c "grunt setup-service"
+su -c "service express-seed start"
+</code></pre>
+
+<ul>
+<li>set up the nginx config and reload the nginx config</li>
+</ul>
+
+<pre><code class="bash">su -c "grunt setup-nginx"
+su -c "ensite express-seed.dev.app.immense.net"
+su -c "service nginx reload"
+</code></pre>
+
+<h2 id="how-to-update-a-production-deployment">How to update a production deployment</h2>
+
+<ul>
+<li>pull the changes:</li>
+</ul>
+
+<pre><code class="bash">git pull
+</code></pre>
+
+<ul>
+<li>install any new dependencies:</li>
+</ul>
+
+<pre><code class="bash">npm install
+bower install
+</code></pre>
+
+<ul>
+<li>restart the service <strong>as root</strong>:</li>
+</ul>
+
+<pre><code class="bash">su -c "service express-seed restart"
+</code></pre>
+
+<h2 id="license">License</h2>
+
+<p>Express Seed is released under the MIT License. Please see the LICENSE file for details.</p></div></div></div></div></body></html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><title>app/router.coffee</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="app/router.coffee"><meta name="groc-project-path" content="app/router.coffee.md"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">app/router.coffee.md</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><pre><code>rootdir  = "#{process.cwd()}"
+appdir   = "#{rootdir}/app"
+app      = require './app'
+user     = require './lib/roles'
+passport = require './lib/passport'
+log4js   = require "#{appdir}/lib/logger"
+logger   = log4js.getLogger 'server'
+</code></pre>
+
+<h1 id="index">Index</h1>
+
+<pre><code>index = require './controllers/index'
+
+app.get '/', index.main
+app.get '/errors', index.errors
+app.get '/401', user.can('view secret'), index.unauthorized
+app.get '/403', user.can('do this'), index.forbidden
+app.get '/500', index.serverError
+app.get '/502', index.badGateway
+</code></pre>
+
+<h1 id="users">Users</h1>
+
+<pre><code>users = require './controllers/users'
+
+app.get  '/users/login', users.login
+app.post '/users/login', passport.authenticate 'local', successRedirect: '/users/secret', failureRedirect: '/users/login'
+app.get  '/users/logout', user.can('logout'), users.logout
+app.get  '/users/secret', user.can('view secret'), users.secret
+app.get  '/users/admin-secret', user.can('view admin secret'), users.adminSecret
+</code></pre>
+
+<p>catch errors and respond with 500</p>
+
+<pre><code>app.use (err, req, res, next) -&gt;
+  res.status 500
+
+  logger.error "\n"+err.stack
+
+  switch req.accepts ['html', 'json', 'text']
+
+    when 'html'
+      res.render 'errors/500', error: err, stack: err.stack
+
+    when 'json'
+      res.send error: err.toString(), stack: err.stack
+
+    when 'text'
+      res.set 'content-type', 'text/plain'
+      res.send "500 Internal server error.\n#{err.toString()}\n#{err.stack}"
+
+    else
+      res.status 406 # not acceptable
+      res.end()
+</code></pre>
+
+<p>everything else is a 404</p>
+
+<pre><code>app.use (req, res) -&gt;
+  res.status 404
+
+  switch req.accepts ['html','json','text']
+
+    when 'html'
+      res.render 'errors/404', url: req.url
+
+    when 'json'
+      res.send error: '404 Not found', url: req.url
+
+    when 'text'
+      res.set 'content-type', 'text/plain'
+      res.send "404 Not found.\nThe requested URL '#{req.url}' was not found on this server."
+
+    else
+      res.status 406 # not acceptable
+      res.end()
+</code></pre></div></div></div></div></body></html>

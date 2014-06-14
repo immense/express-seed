@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><title>app/lib/roles</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="app/lib/roles"><meta name="groc-project-path" content="app/lib/roles.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">app/lib/roles.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">appdir = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span><span class="si">}</span><span class="s">/app&quot;</span>
+
+<span class="nv">ConnectRoles = </span><span class="nx">require</span> <span class="s">&#39;connect-roles&#39;</span>
+
+<span class="nv">roles = module.exports = </span><span class="k">new</span> <span class="nx">ConnectRoles</span>
+
+  <span class="nv">failureHandler: </span><span class="nf">(req, res, action) -&gt;</span>
+    <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">isAuthenticated</span><span class="p">()</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">403</span>
+
+      <span class="k">switch</span> <span class="nx">req</span><span class="p">.</span><span class="nx">accepts</span> <span class="p">[</span><span class="s">&#39;html&#39;</span><span class="p">,</span> <span class="s">&#39;json&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">]</span>
+
+        <span class="k">when</span> <span class="s">&#39;html&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">render</span> <span class="s">&#39;errors/403&#39;</span><span class="p">,</span> <span class="nv">action: </span><span class="nx">action</span>
+
+        <span class="k">when</span> <span class="s">&#39;json&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="nv">error: </span><span class="s">&#39;403 Forbidden&#39;</span><span class="p">,</span> <span class="nv">action: </span><span class="nx">action</span>
+
+        <span class="k">when</span> <span class="s">&#39;text&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;content-type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&quot;403 Forbidden.\nYou don&#39;t have permission to </span><span class="si">#{</span><span class="nx">action</span><span class="si">}</span><span class="s">.&quot;</span>
+
+        <span class="k">else</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">406</span> <span class="c1"># not acceptable</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+
+    <span class="k">else</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">401</span>
+
+      <span class="k">switch</span> <span class="nx">req</span><span class="p">.</span><span class="nx">accepts</span> <span class="p">[</span><span class="s">&#39;html&#39;</span><span class="p">,</span> <span class="s">&#39;json&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">]</span>
+
+        <span class="k">when</span> <span class="s">&#39;html&#39;</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>either redirect to the login page, or respond with 401.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">res</span><span class="p">.</span><span class="nx">render</span> <span class="s">&#39;errors/401&#39;</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>req.session.returnTo = req.originalUrl
+res.redirect '/users/login'</p></div></div><div class="code"><div class="wrapper">        <span class="k">when</span> <span class="s">&#39;json&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="nv">error: </span><span class="s">&#39;401 Unauthorized&#39;</span>
+
+        <span class="k">when</span> <span class="s">&#39;text&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;content-type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&quot;401 Unauthorized.&quot;</span>
+
+        <span class="k">else</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">406</span> <span class="c1"># not acceptable</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Authorization strategies are checked in order.
+The first one to return true or false results in "allowed" or "denied" respectively.
+Returning null results in the next strategy being tried.</p></div></div><div class="code"><div class="wrapper"><span class="nv">actionsAllowedByAnyone = </span><span class="p">[</span><span class="s">&#39;logout&#39;</span><span class="p">]</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>checked for all actions</p></div></div><div class="code"><div class="wrapper"><span class="nx">roles</span><span class="p">.</span><span class="nx">use</span> <span class="nf">(req, action) -&gt;</span>
+  <span class="k">if</span> <span class="o">not</span> <span class="nx">req</span><span class="p">.</span><span class="nx">isAuthenticated</span><span class="p">()</span>           <span class="c1"># if you&#39;re not authenticated</span>
+    <span class="kc">false</span>                                   <span class="c1">#   then you&#39;re not allowed.</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="nx">action</span> <span class="k">in</span> <span class="nx">actionsAllowedByAnyone</span>  <span class="c1"># if you&#39;re trying to do any action that any authenticated user can do</span>
+    <span class="kc">true</span>                                    <span class="c1">#   then you&#39;re allowed.</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="nx">action</span> <span class="k">in</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">roles</span>          <span class="c1"># if the action you&#39;re performing is a role name you have</span>
+    <span class="kc">true</span>                                    <span class="c1">#   then you&#39;re allowed.</span>
+  <span class="k">else</span>                                      <span class="c1"># otherwise</span>
+    <span class="kc">null</span>                                    <span class="c1">#   move on to the next strategy</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>checked for specific actions</p></div></div><div class="code"><div class="wrapper"><span class="nx">roles</span><span class="p">.</span><span class="nx">use</span> <span class="s">&#39;view secret&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
+  <span class="k">if</span> <span class="s">&#39;user&#39;</span> <span class="k">in</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">roles</span> <span class="k">then</span> <span class="kc">true</span> <span class="k">else</span> <span class="kc">null</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>all else fails, are they an admin?</p></div></div><div class="code"><div class="wrapper"><span class="nx">roles</span><span class="p">.</span><span class="nx">use</span> <span class="nf">(req) -&gt;</span> <span class="s">&#39;admin&#39;</span> <span class="k">in</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">roles</span></div></div></div></div></body></html>

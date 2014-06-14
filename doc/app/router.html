@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><title>app/router</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="app/router"><meta name="groc-project-path" content="app/router.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">app/router.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">rootdir  = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span>
+<span class="nv">appdir   = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">rootdir</span><span class="si">}</span><span class="s">/app&quot;</span>
+<span class="nv">app      = </span><span class="nx">require</span> <span class="s">&#39;./app&#39;</span>
+<span class="nv">user     = </span><span class="nx">require</span> <span class="s">&#39;./lib/roles&#39;</span>
+<span class="nv">passport = </span><span class="nx">require</span> <span class="s">&#39;./lib/passport&#39;</span>
+<span class="nv">log4js   = </span><span class="nx">require</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">appdir</span><span class="si">}</span><span class="s">/lib/logger&quot;</span>
+<span class="nv">logger   = </span><span class="nx">log4js</span><span class="p">.</span><span class="nx">getLogger</span> <span class="s">&#39;server&#39;</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Index</p></div></div><div class="code"><div class="wrapper"><span class="nv">index = </span><span class="nx">require</span> <span class="s">&#39;./controllers/index&#39;</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">.</span><span class="nx">main</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/errors&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">.</span><span class="nx">errors</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/401&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">can</span><span class="p">(</span><span class="s">&#39;view secret&#39;</span><span class="p">),</span> <span class="nx">index</span><span class="p">.</span><span class="nx">unauthorized</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/403&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">can</span><span class="p">(</span><span class="s">&#39;do this&#39;</span><span class="p">),</span> <span class="nx">index</span><span class="p">.</span><span class="nx">forbidden</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/500&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">.</span><span class="nx">serverError</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;/502&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">.</span><span class="nx">badGateway</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Users</p></div></div><div class="code"><div class="wrapper"><span class="nv">users = </span><span class="nx">require</span> <span class="s">&#39;./controllers/users&#39;</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span>  <span class="s">&#39;/users/login&#39;</span><span class="p">,</span> <span class="nx">users</span><span class="p">.</span><span class="nx">login</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span> <span class="s">&#39;/users/login&#39;</span><span class="p">,</span> <span class="nx">passport</span><span class="p">.</span><span class="nx">authenticate</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="nv">successRedirect: </span><span class="s">&#39;/users/secret&#39;</span><span class="p">,</span> <span class="nv">failureRedirect: </span><span class="s">&#39;/users/login&#39;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span>  <span class="s">&#39;/users/logout&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">can</span><span class="p">(</span><span class="s">&#39;logout&#39;</span><span class="p">),</span> <span class="nx">users</span><span class="p">.</span><span class="nx">logout</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span>  <span class="s">&#39;/users/secret&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">can</span><span class="p">(</span><span class="s">&#39;view secret&#39;</span><span class="p">),</span> <span class="nx">users</span><span class="p">.</span><span class="nx">secret</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span>  <span class="s">&#39;/users/admin-secret&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">can</span><span class="p">(</span><span class="s">&#39;view admin secret&#39;</span><span class="p">),</span> <span class="nx">users</span><span class="p">.</span><span class="nx">adminSecret</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>catch errors and respond with 500</p></div></div><div class="code"><div class="wrapper"><span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nf">(err, req, res, next) -&gt;</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">500</span>
+
+  <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="s">&quot;\n&quot;</span><span class="o">+</span><span class="nx">err</span><span class="p">.</span><span class="nx">stack</span>
+
+  <span class="k">switch</span> <span class="nx">req</span><span class="p">.</span><span class="nx">accepts</span> <span class="p">[</span><span class="s">&#39;html&#39;</span><span class="p">,</span> <span class="s">&#39;json&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">]</span>
+
+    <span class="k">when</span> <span class="s">&#39;html&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">render</span> <span class="s">&#39;errors/500&#39;</span><span class="p">,</span> <span class="nv">error: </span><span class="nx">err</span><span class="p">,</span> <span class="nv">stack: </span><span class="nx">err</span><span class="p">.</span><span class="nx">stack</span>
+
+    <span class="k">when</span> <span class="s">&#39;json&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="nv">error: </span><span class="nx">err</span><span class="p">.</span><span class="nx">toString</span><span class="p">(),</span> <span class="nv">stack: </span><span class="nx">err</span><span class="p">.</span><span class="nx">stack</span>
+
+    <span class="k">when</span> <span class="s">&#39;text&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;content-type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&quot;500 Internal server error.\n</span><span class="si">#{</span><span class="nx">err</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="si">}</span><span class="s">\n</span><span class="si">#{</span><span class="nx">err</span><span class="p">.</span><span class="nx">stack</span><span class="si">}</span><span class="s">&quot;</span>
+
+    <span class="k">else</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">406</span> <span class="c1"># not acceptable</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>everything else is a 404</p></div></div><div class="code"><div class="wrapper"><span class="nx">app</span><span class="p">.</span><span class="nx">use</span> <span class="nf">(req, res) -&gt;</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">404</span>
+
+  <span class="k">switch</span> <span class="nx">req</span><span class="p">.</span><span class="nx">accepts</span> <span class="p">[</span><span class="s">&#39;html&#39;</span><span class="p">,</span><span class="s">&#39;json&#39;</span><span class="p">,</span><span class="s">&#39;text&#39;</span><span class="p">]</span>
+
+    <span class="k">when</span> <span class="s">&#39;html&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">render</span> <span class="s">&#39;errors/404&#39;</span><span class="p">,</span> <span class="nv">url: </span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span>
+
+    <span class="k">when</span> <span class="s">&#39;json&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="nv">error: </span><span class="s">&#39;404 Not found&#39;</span><span class="p">,</span> <span class="nv">url: </span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span>
+
+    <span class="k">when</span> <span class="s">&#39;text&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;content-type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&quot;404 Not found.\nThe requested URL &#39;</span><span class="si">#{</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="si">}</span><span class="s">&#39; was not found on this server.&quot;</span>
+
+    <span class="k">else</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">406</span> <span class="c1"># not acceptable</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span></div></div></div></div></body></html>
