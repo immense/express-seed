@@ -29,10 +29,13 @@ app.use log4js.connectLogger logger, level: 'auto', format: ':method :url :statu
 app.use express.static "#{rootdir}/public"
 app.use favicon "#{rootdir}/assets/img/favicon.ico"
 app.use compress()
-app.use bodyParser()
+app.use bodyParser.urlencoded(extended: false)
+app.use bodyParser.json()
 app.use methodOverride()
 app.use cookieParser()
 app.use session
+  resave: true
+  saveUninitialized: true
   secret: conf.cookie_secret
   store: new MongoStore
     url: mongo_conf.uri
