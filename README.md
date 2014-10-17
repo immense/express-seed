@@ -59,7 +59,7 @@ Note: This deploy process is specific to CentOS machines.
 adduser express-seed
 chmod 755 /home/express-seed
 su - express-seed
-curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+curl https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
 source ~/.bash_profile
 nvm install 0.10
 nvm alias default 0.10
