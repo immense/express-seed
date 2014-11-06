@@ -28,8 +28,8 @@ server.listen app.settings.port, ->
   if config.socket? and fs.existsSync config.socket
     fs.chmodSync config.socket, '777'
 
-  port = if config.socket? then 'socket' else 'port'
+  portType = if config.socket? then 'socket' else 'port'
   time = new Date - start
-  logger.info "#{config.appName} started on #{port} #{app.settings.port} (#{env} mode) in #{time}ms"
+  logger.info "#{config.appName} started#{if port = app.settings.port then " on #{portType} #{port}" else ''} (#{env} mode) in #{time}ms"
 
 module.exports = app
