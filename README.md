@@ -51,7 +51,7 @@ grunt
 
 ## How to deploy production
 
-Note: This deploy process is specific to CentOS machines.
+Note: This deploy process is specific to CentOS machines with nginx compiled with the passenger module.
 
 * create a user account on the host machine called `express-seed` and set it up:
 
@@ -59,11 +59,6 @@ Note: This deploy process is specific to CentOS machines.
 adduser express-seed
 chmod 755 /home/express-seed
 su - express-seed
-curl https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
-source ~/.bash_profile
-nvm install 0.10
-nvm alias default 0.10
-npm install -g forever grunt-cli bower coffee-script
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub
 ```
@@ -89,6 +84,7 @@ grunt setup
 
 * edit the config files in app/config to your liking
   * Note: make sure to change `env` to `production` in `app/config/app.coffee`
+  * Note: make sure to set `serverNames` in `app/config/nginx.coffee`
 
 * seed the database
 
@@ -96,20 +92,17 @@ grunt setup
 grunt db:seed
 ```
 
-* create the init script and activate the service:
-  * **Note**: the rest of these commands have to be run as root
-
-```bash
-su -c "grunt setup-service"
-su -c "service express-seed start"
-```
-
 * set up the nginx config and reload the nginx config
 
 ```bash
 su -c "grunt setup-nginx"
-su -c "ensite express-seed.dev.app.immense.net"
 su -c "service nginx reload"
+```
+
+* compile the assets and restart the application:
+
+```bash
+grunt production
 ```
 
 ## How to update a production deployment
@@ -127,10 +120,10 @@ npm install
 bower install
 ```
 
-* restart the service **as root**:
+* recompile the assets and restart the application:
 
 ```bash
-su -c "service express-seed restart"
+grunt production
 ```
 
 ## License
