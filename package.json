@@ -1,6 +1,6 @@
 {
   "name": "express-seed",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "repository": {
     "type": "git",
@@ -8,7 +8,7 @@
     "web": "https://github.com/immense/express-seed"
   },
   "scripts": {
-    "start": "grunt production"
+    "start": "echo Deprecated: run with nginx+passenger in production"
   },
   "dependencies": {
     "express": "~4.8.8",

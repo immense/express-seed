@@ -50,16 +50,15 @@ module.exports = (grunt) ->
   grunt.registerTask 'production', [
     'deploy-assets'
     'uglify'
-    'forever:server:start'
   ]
 
-  grunt.registerTask 'stop', [
-    'forever:server:stop'
-  ]
-
-  grunt.registerTask 'restart', [
-    'deploy-assets'
-    'uglify'
-    'forever:server:stop'
-    'forever:server:start'
-  ]
+  # grunt.registerTask 'stop', [
+  #   'forever:server:stop'
+  # ]
+  #
+  # grunt.registerTask 'restart', [
+  #   'deploy-assets'
+  #   'uglify'
+  #   'forever:server:stop'
+  #   'forever:server:start'
+  # ]
