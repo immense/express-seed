@@ -113,10 +113,10 @@ npm install
 bower install
 ```
 
-* restart the service:
+* recompile the assets and restart the server:
 
 ```bash
-touch restart.txt
+grunt production
 ```
 
 ## License

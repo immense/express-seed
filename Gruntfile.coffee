@@ -47,18 +47,17 @@ module.exports = (grunt) ->
     'concurrent:dev'
   ]
 
-  grunt.registerTask 'production', [
+  grunt.registerTask 'compile-assets', [
     'deploy-assets'
     'uglify'
+  ]
+
+  grunt.registerTask 'production', [
+    'compile-assets'
+    'touch:restart'
   ]
 
   # grunt.registerTask 'stop', [
   #   'forever:server:stop'
   # ]
   #
-  # grunt.registerTask 'restart', [
-  #   'deploy-assets'
-  #   'uglify'
-  #   'forever:server:stop'
-  #   'forever:server:start'
-  # ]
