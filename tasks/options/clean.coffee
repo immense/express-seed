@@ -2,4 +2,4 @@
 module.exports =
   pre: ['public/*']
   pre_images: ['public/img/*']
-  post: ['tmp/*']
+  post: ['tmp/*', '!tmp/restart.txt']

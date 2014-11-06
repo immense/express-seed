@@ -2,7 +2,6 @@ config = require './app'
 
 module.exports =
   upstreamName: config.appName
-  socketFile: config.socket
   publicRoot: "/home/#{config.appUser}/sites/#{config.appName}/public"
   # space separated list of server names for nginx vhost
   serverNames: "#{config.appName}.dev.app.immense.net"

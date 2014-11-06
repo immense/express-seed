@@ -11,9 +11,8 @@ module.exports = (grunt) ->
     if not nginx_config? then throw new Error 'no nginx.coffee config file.'
     upstreamName = nginx_config.upstreamName
     if not upstreamName? then throw new Error 'no upstreamName defined in app.coffee.'
-    socketFile = nginx_config.socketFile
-    if not socketFile? then throw new Error 'not configured to run on a unix socket.'
     serverNames = nginx_config.serverNames
+    firstServerName = serverNames.split(' ')[0]
     if not serverNames? then throw new Error 'no serverNames defined in app.coffee.'
     publicRoot = nginx_config.publicRoot
     if not publicRoot? then throw new Error 'no publicRoot defined in app.coffee.'
@@ -23,12 +22,13 @@ module.exports = (grunt) ->
     done = @async()
 
     locals =
+      node_environment: config.env
       upstreamName: upstreamName
-      socketFile: socketFile
       serverNames: serverNames
+      firstServerName: firstServerName
       publicRoot: publicRoot
 
-    filename = config.appName
+    filename = firstServerName or config.appName
 
     fs.readFile './support/nginx.conf', (err, configContents) ->
       if err? then throw err

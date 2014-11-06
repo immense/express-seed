@@ -1,8 +1,3 @@
-fs = require 'fs'
-
-if fs.existsSync './app/config/app.coffee'
-  config = require './app/config/app'
-
 _loadConfig = (path) ->
   glob = require 'glob'
 
@@ -47,19 +42,18 @@ module.exports = (grunt) ->
     'concurrent:dev'
   ]
 
+  grunt.registerTask 'compile-assets', [
+    'deploy-assets'
+    'uglify'
+  ]
+
   grunt.registerTask 'production', [
-    'deploy-assets'
-    'uglify'
-    'forever:server:start'
+    'compile-assets'
+    'touch:restart'
+    'exec:curl-head'
   ]
 
-  grunt.registerTask 'stop', [
-    'forever:server:stop'
-  ]
-
-  grunt.registerTask 'restart', [
-    'deploy-assets'
-    'uglify'
-    'forever:server:stop'
-    'forever:server:start'
-  ]
+  # grunt.registerTask 'stop', [
+  #   'forever:server:stop'
+  # ]
+  #
