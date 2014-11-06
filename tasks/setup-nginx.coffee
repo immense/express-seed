@@ -22,6 +22,7 @@ module.exports = (grunt) ->
     done = @async()
 
     locals =
+      node_environment: config.env
       upstreamName: upstreamName
       serverNames: serverNames
       firstServerName: firstServerName
