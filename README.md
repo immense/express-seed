@@ -84,6 +84,7 @@ grunt setup
 
 * edit the config files in app/config to your liking
   * Note: make sure to change `env` to `production` in `app/config/app.coffee`
+  * Note: make sure to set `serverNames` in `app/config/nginx.coffee`
 
 * seed the database
 
@@ -96,6 +97,12 @@ grunt db:seed
 ```bash
 su -c "grunt setup-nginx"
 su -c "service nginx reload"
+```
+
+* compile the assets and restart the application:
+
+```bash
+grunt production
 ```
 
 ## How to update a production deployment
@@ -113,7 +120,7 @@ npm install
 bower install
 ```
 
-* recompile the assets and restart the server:
+* recompile the assets and restart the application:
 
 ```bash
 grunt production
