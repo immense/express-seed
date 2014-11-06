@@ -12,6 +12,7 @@ module.exports = (grunt) ->
     upstreamName = nginx_config.upstreamName
     if not upstreamName? then throw new Error 'no upstreamName defined in app.coffee.'
     serverNames = nginx_config.serverNames
+    firstServerName = serverNames.split(' ')[0]
     if not serverNames? then throw new Error 'no serverNames defined in app.coffee.'
     publicRoot = nginx_config.publicRoot
     if not publicRoot? then throw new Error 'no publicRoot defined in app.coffee.'
@@ -23,10 +24,10 @@ module.exports = (grunt) ->
     locals =
       upstreamName: upstreamName
       serverNames: serverNames
-      firstServerName: serverNames.split(' ')[0]
+      firstServerName: firstServerName
       publicRoot: publicRoot
 
-    filename = config.appName
+    filename = firstServerName or config.appName
 
     fs.readFile './support/nginx.conf', (err, configContents) ->
       if err? then throw err
