@@ -1,8 +1,3 @@
-fs = require 'fs'
-
-if fs.existsSync './app/config/app.coffee'
-  config = require './app/config/app'
-
 _loadConfig = (path) ->
   glob = require 'glob'
 
@@ -55,6 +50,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'production', [
     'compile-assets'
     'touch:restart'
+    'exec:curl-head'
   ]
 
   # grunt.registerTask 'stop', [
