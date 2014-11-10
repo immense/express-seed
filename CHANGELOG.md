@@ -1,5 +1,63 @@
 # Express Seed Changelog
 
+## 0.4.0 -> 0.5.0
+*Mon Nov 10 12:44:18 2014 -0600*
+
+* Added autoprefixer
+* Updated some packages
+* Removed some unused files
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/2ad41d3bf08c3564ed7f33c66c86ccd89857b0c1)__
+
+## 0.3.0 -> 0.4.0
+*Thu Nov 6 13:39:28 2014 -0600*
+
+* Fixed application started language
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/b84aa4e545bbc96b094eca94c86c8e7ab9ef6ee1)__
+
+
+* Updated readme
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/f0cac485d33fd015791aee7fc7c1ee6c59d3f307)__
+
+
+* Added curl-head to trigger passenger's restart
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/53685cb3d6ed709b995f169f7c605d9b3c019806)__
+
+
+* Added grunt restart to touch restart.txt on grunt production
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/a0db2294da4dc65c8ad58ad3187b1ad1bdf78469)__
+
+
+* Added environment detection to setup-nginx task
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/d2bca8bcaca3e6e36e152e8810a265fdece6a9d7)__
+
+
+* Fixed: write nginx vhost to file with server name
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/8728708fc0c7b953ba6009491a8f8fc52651494b)__
+
+
+* Switched to use nginx+passenger in production
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/fc010259412bf5449c16e7c26297bb128e976b10)__
+
+
+* Updated nvm install command in README
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/e4db397047d838045f83698d845abb8327f757f7)__
+
+
+* Refactored gruntile
+* Fixed forever grunt task
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/eb9e92770adb041c821d671badf3cb5d80ad93c6)__
+
+
+* Updated dependencies to their latest versions
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/1ac9d8797d3a14da9867ca389cfaf2121eea047d)__
+
+## 0.2.6 -> 0.3.0
+*Tue Jun 10 15:33:24 2014 -0500*
+
+* Updated dependencies
+* Updated express to 4
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/e546017bdf02d1b3136f850f5f3b39106e1038e3)__
+
 ## 0.2.5 -> 0.2.6
 *Mon May 19 13:22:02 2014 -0500*
 1. Fixes grunt-forever
