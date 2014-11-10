@@ -27,6 +27,7 @@ module.exports = (grunt) ->
     'clean:pre'
     'copy'
     'less'
+    'postcss'
     'coffee'
     'concat'
     'jade'
@@ -52,8 +53,3 @@ module.exports = (grunt) ->
     'touch:restart'
     'exec:curl-head'
   ]
-
-  # grunt.registerTask 'stop', [
-  #   'forever:server:stop'
-  # ]
-  #

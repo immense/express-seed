@@ -1,13 +1,13 @@
 {
   "name": "express-seed",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
-    "modernizr": "~2.8.2",
+    "modernizr": "~2.8.3",
     "respond": "~1.4.2",
     "es5-shim": "~4.0.3",
     "jquery": "~2.1.1",
-    "bootstrap": "~3.2.0",
+    "bootstrap": "~3.3.0",
     "font-awesome": "~4.2.0",
     "knockout.js": "~3.1.0",
     "sugar": "~1.4.1"
