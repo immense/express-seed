@@ -5,7 +5,7 @@ module.exports =
 
   styles:
     files: ['assets/styles/**/*.less']
-    tasks: ['less', 'concat:app_css', 'clean:post']
+    tasks: ['less', 'postcss', 'concat:app_css', 'clean:post']
 
   images:
     files: ['assets/img/**']
