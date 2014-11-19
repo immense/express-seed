@@ -2,8 +2,8 @@
 module.exports =
   images:
     expand: true
-    cwd: 'assets/img/'
-    src: '**'
+    flatten: true
+    src: ['assets/img/**', 'bower_components/immybox/**/*.png']
     dest: 'public/img/'
   fontAwesome:
     expand: true

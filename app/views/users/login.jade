@@ -1,13 +1,14 @@
 extends ../layout
 
+block page-header
+  h1 Login
+
 block content
-  .container
-    h1 Login
-    form(action='/users/login', method='post')
-      .form-group
-        label(for='username') Username
-        input#username.form-control(type='text', name='username', placeholder='Username', autofocus)
-      .form-group
-        label(for='password') Password
-        input#password.form-control(type='password', name='password', placeholder='Password')
-      button.btn.btn-default(type='submit') Login
+  form(action='/login', method='post')
+    .form-group
+      label(for='username') Username
+      input#username.form-control(type='text', name='username', placeholder='Username', autofocus)
+    .form-group
+      label(for='password') Password
+      input#password.form-control(type='password', name='password', placeholder='Password')
+    button.btn.btn-default(type='submit') Login

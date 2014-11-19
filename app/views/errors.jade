@@ -1,29 +1,31 @@
 extends layout
 
+block page-header
+  h1 Error tests
+
 block content
-  .container
-    h1 Error tests
+  if isAuthenticated()
+    p You are logged in as "#{user.username}".
+    form(action="/logout", method="post")
+      button.btn.btn-link(type="submit")
+        |Log Out&nbsp;
+        i.fa.fa-sign-out
+  else
+    p You are not logged in. <a href="/login">Login</a>.
 
-    hr
+  p These are the standard error pages you might see.
 
-    if isAuthenticated()
-      p You are logged in as "#{user.username}". <a href="/users/logout">Logout</a>.
-    else
-      p You are not logged in. <a href="/users/login">Login</a>.
+  ul
+    li
+      a(href='/401') 401
+      |&nbsp;(will work if you are <b>not</b> logged in)
+    li
+      a(href='/403') 403
+      |&nbsp;(will work if you <b>are</b> logged in, but <b>not</b> as admin)
+    li: a(href='/404') 404
+    li: a(href='/500') 500
 
-    p These are the standard error pages you might see.
-
-    ul
-      li
-        a(href='/401') 401
-        |&nbsp;(will work if you are <b>not</b> logged in)
-      li
-        a(href='/403') 403
-        |&nbsp;(will work if you <b>are</b> logged in, but <b>not</b> as admin)
-      li: a(href='/404') 404
-      li: a(href='/500') 500
-
-    p View console output to see AJAX serving the errors as JSON.
+  p View console output to see AJAX serving the errors as JSON.
 
 block script
   script(type='text/javascript')
