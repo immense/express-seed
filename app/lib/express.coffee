@@ -9,6 +9,7 @@ methodOverride = require 'method-override'
 cookieParser   = require 'cookie-parser'
 session        = require 'express-session'
 MongoStore     = require('connect-mongo') session
+activeTags     = require 'active-tags'
 
 conf           = require "#{appdir}/config/app"
 mongo_conf     = require "#{appdir}/config/mongo"
@@ -43,3 +44,4 @@ app.use passport.initialize()
 app.use passport.session()
 app.use roles.middleware()
 app.use (req, res, next) -> res.locals.conf = conf; next()
+app.use activeTags()

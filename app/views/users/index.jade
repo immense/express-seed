@@ -1,0 +1,31 @@
+extends ../layout
+
+block page-header
+  h1 Users
+  +new-record-link('User', '/users/new')
+
+block content
+  .members(data-bind="with: table")
+    .row
+      .col-md-8: +dt-pagination
+      .col-md-4: +dt-search-input
+
+    table.table.table-striped
+      thead
+        tr
+          th(style="width: 80%;") Username
+          th(style="width: 20%;") Actions
+      tbody(data-bind='foreach: pagedRows')
+        tr
+          td(data-bind='text: username')
+          td
+            .btn-group
+              a.btn.btn-mini.btn-default(data-bind='attr: {href: editUrl}') Edit
+              button.btn.btn-mini.btn-default(type='button', data-bind='click: del') Delete
+    
+    +dt-pagination
+
+block script
+  script
+    :coffee
+      $ -> window.view = new UsersView()

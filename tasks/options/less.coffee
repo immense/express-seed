@@ -5,6 +5,7 @@ module.exports =
       paths: [
         'bower_components/bootstrap/less'
         'bower_components/font-awesome/less'
+        'bower_components/immybox'
       ]
       compress: config?.env is 'production'
     files:
