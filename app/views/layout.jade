@@ -1,3 +1,4 @@
+include includes/mixins/index
 doctype html
 html
   head
@@ -7,20 +8,29 @@ html
     script(type='text/javascript', src='/js/compat.js')
     title Immense Express Seed
   body
-    //if lte IE 8
-      .alert.alert-danger.
-        You are using an <strong>outdated</strong> browser.
-        Please <a href='http://browsehappy.com/'>upgrade your browser</a>
-        to improve your experience.
-    block content
-    .container
+    header
+      include includes/mainnav
+    main
+      //if lte IE 8
+        .alert.alert-danger.
+          You are using an <strong>outdated</strong> browser.
+          Please <a href='http://browsehappy.com/'>upgrade your browser</a>
+          to improve your experience.
+      .container
+        .page-header
+          .alerts
+            .error-alert
+            .general-alert
+            .success-alert
+          block page-header
+        block content
+    footer: .container
       hr
-      footer
-        p © Immense Networks 2013
-        p.text-muted: small
-          |Version #{conf.version}
-          if conf.env == 'development'
-            |&nbsp;&mdash; #{conf.branch} &mdash;&nbsp;
-            a(href=conf.hashLink)= conf.hash
+      p © Immense Networks #{(new Date()).getFullYear()}
+      p.text-muted: small
+        |Version #{conf.version}
+        if conf.env == 'development'
+          |&nbsp;&mdash; #{conf.branch} &mdash;&nbsp;
+          a(href=conf.hashLink)= conf.hash
     script(type='text/javascript', src='/js/app.js')
     block script

@@ -50,7 +50,7 @@ roles = module.exports = new ConnectRoles
 # The first one to return true or false results in "allowed" or "denied" respectively.
 # Returning null results in the next strategy being tried.
 
-actionsAllowedByAnyone = ['logout']
+actionsAllowedByAnyone = ['logout', 'view users', 'create users', 'edit users']
 
 # checked for all actions
 roles.use (req, action) ->

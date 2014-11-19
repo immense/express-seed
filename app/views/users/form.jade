@@ -1,0 +1,7 @@
+form.form-horizontal(role="form")
+  +ko-form-group('Username', 'username', {required: true})(type="text", autofocus)
+  +ko-form-group-immybox('Role', 'role', 'roles_immybox', {required: true})(type="text")  
+  +ko-form-submit-button
+    i.icon-save
+      |&nbsp;Save
+        

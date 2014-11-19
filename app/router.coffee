@@ -6,8 +6,37 @@ passport = require './lib/passport'
 log4js   = require "#{appdir}/lib/logger"
 logger   = log4js.getLogger 'server'
 
-# Index
+# API Routes
+
+users_api   = require "#{appdir}/controllers/api/users"
+
+## Users
+app.get '/api/users',                           users_api.listUsers...
+app.get '/api/users/:id',                       users_api.showUser...
+app.post '/api/users/create_user',              users_api.createUser...
+app.patch '/api/users/:id/update_user',         users_api.updateUser...
+app.delete '/api/users/:id/delete_user',        users_api.deleteUser...
+
+# View Routes
 index = require './controllers/index'
+users = require './controllers/users'
+
+app.get '*', (req, res, next) ->
+  res.locals.server_messages = if req.isAuthenticated()
+    if (name = req.user.name) and name isnt ''
+      {info: "Welcome, #{name}"}
+    else
+      {info: "Welcome, #{req.user.username}"}
+  else
+    {warning: "You must log in to continue"}
+  next()
+
+## Auth
+app.get  '/login', users.login
+app.post '/login', passport.authenticate 'local', successRedirect: '/users/secret', failureRedirect: '/login'
+app.post '/logout', users.logout
+
+# Index
 
 app.get '/', index.main
 app.get '/errors', index.errors
@@ -16,14 +45,12 @@ app.get '/403', user.can('do this'), index.forbidden
 app.get '/500', index.serverError
 app.get '/502', index.badGateway
 
-# Users
-users = require './controllers/users'
-
-app.get  '/users/login', users.login
-app.post '/users/login', passport.authenticate 'local', successRedirect: '/users/secret', failureRedirect: '/users/login'
-app.get  '/users/logout', user.can('logout'), users.logout
-app.get  '/users/secret', user.can('view secret'), users.secret
-app.get  '/users/admin-secret', user.can('view admin secret'), users.adminSecret
+## Users
+app.get '/users',               users.list...
+app.get  '/users/secret',       users.secret...
+app.get  '/users/admin-secret', users.adminSecret...
+app.get '/users/new',           users.newUser...
+app.get '/users/:id',           users.editUser...
 
 # catch errors and respond with 500
 app.use (err, req, res, next) ->
@@ -31,38 +58,36 @@ app.use (err, req, res, next) ->
 
   logger.error "\n"+err.stack
 
-  switch req.accepts ['html', 'json', 'text']
+  res.format
 
-    when 'html'
+    html: ->
       res.render 'errors/500', error: err, stack: err.stack
 
-    when 'json'
+    json: ->
       res.send error: err.toString(), stack: err.stack
 
-    when 'text'
+    text: ->
       res.set 'content-type', 'text/plain'
       res.send "500 Internal server error.\n#{err.toString()}\n#{err.stack}"
 
-    else
-      res.status 406 # not acceptable
-      res.end()
+    default: ->
+      res.sendStatus 406
 
 # everything else is a 404
 app.use (req, res) ->
   res.status 404
 
-  switch req.accepts ['html','json','text']
+  res.format
 
-    when 'html'
+    html: ->
       res.render 'errors/404', url: req.url
 
-    when 'json'
+    json: ->
       res.send error: '404 Not found', url: req.url
 
-    when 'text'
+    text: ->
       res.set 'content-type', 'text/plain'
       res.send "404 Not found.\nThe requested URL '#{req.url}' was not found on this server."
 
-    else
-      res.status 406 # not acceptable
-      res.end()
+    default: ->
+      res.sendStatus 406

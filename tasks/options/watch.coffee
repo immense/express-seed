@@ -24,7 +24,7 @@ module.exports =
     options: livereload: true
 
   gruntfile:
-    files: ['Gruntfile.coffee']
+    files: ['Gruntfile.coffee', 'tasks/**/*.coffee']
     tasks: ['deploy-assets']
 
   npm:
