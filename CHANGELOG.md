@@ -1,5 +1,11 @@
 # Express Seed Changelog
 
+## 0.5.0 -> 0.6.0
+*Wed Nov 19 17:54:29 2014 -0600*
+
+* Added navbar, better user views
+	* __[view commit](http://gitlab.immense.net/seeds/express-seed/commit/56be788b91a0c574bef7ebf87304defa62ed6fe9)__
+
 ## 0.4.0 -> 0.5.0
 *Mon Nov 10 12:44:18 2014 -0600*
 
