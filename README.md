@@ -1,3 +1,4 @@
+[![Dependency Status](https://gemnasium.com/5bc0f352c1e256e53e5fb5048ce39d7d.svg)](https://gemnasium.com/a26f67c7f69b6fcaad0d6caacd639191)
 # Express Seed Application
 
 A jumping-off point for node+express based web applications.
