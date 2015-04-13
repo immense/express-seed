@@ -1,5 +1,9 @@
 # Express Seed Changelog
 
+## 0.6.0 -> 0.6.1
+*Mon Apr 13 10:40:15 2015 -0500*
+1. Clean up for GitHub
+
 ## 0.5.0 -> 0.6.0
 *Wed Nov 19 17:54:29 2014 -0600*
 
