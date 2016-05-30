@@ -46,7 +46,6 @@
     "grunt-exec": "~0.4.6",
     "grunt-nodemon": "~0.3.0",
     "grunt-postcss": "~0.2.0",
-    "grunt-shell": "~1.1.1",
     "grunt-touch": "~0.1.0",
     "load-grunt-tasks": "~1.0.0",
     "mustache": "~0.8.2"

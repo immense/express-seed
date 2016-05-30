@@ -35,7 +35,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'setup', [
-    'shell:copyConfigs'
+    'exec:copyConfigs'
   ]
 
   grunt.registerTask 'default', [

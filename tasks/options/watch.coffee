@@ -29,8 +29,8 @@ module.exports =
 
   npm:
     files: ['package.json']
-    tasks: ['shell:npm']
+    tasks: ['exec:npm']
 
   bower:
     files: ['bower.json']
-    tasks: ['shell:bower']
+    tasks: ['exec:bower']
